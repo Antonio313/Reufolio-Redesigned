@@ -185,7 +185,7 @@ const Hero = () => {
 
           {/* Scroll Indicator */}
           <motion.div
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer"
+            className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
             animate={prefersReducedMotion ? {} : { y: [0, 10, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
             onClick={() => scrollToSection('about')}
