@@ -1,7 +1,9 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { FiGithub, FiLinkedin, FiMail, FiArrowDown } from 'react-icons/fi';
 
 const Hero = () => {
+  const prefersReducedMotion = useReducedMotion();
+
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -14,15 +16,15 @@ const Hero = () => {
       id="home"
       className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
     >
-      {/* Animated background elements */}
+      {/* Animated background elements - Simplified for mobile */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f12_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f12_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
 
-        {/* Animated gradient orbs */}
+        {/* Animated gradient orbs - Reduced on mobile */}
         <motion.div
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"
-          animate={{
+          animate={prefersReducedMotion ? {} : {
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3],
           }}
@@ -31,10 +33,11 @@ const Hero = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
+          style={{ willChange: 'transform' }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
-          animate={{
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl hidden md:block"
+          animate={prefersReducedMotion ? {} : {
             scale: [1.2, 1, 1.2],
             opacity: [0.3, 0.5, 0.3],
           }}
@@ -43,24 +46,13 @@ const Hero = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-        />
-        <motion.div
-          className="absolute top-1/2 right-1/3 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
+          style={{ willChange: 'transform' }}
         />
 
-        {/* Floating geometric shapes */}
+        {/* Floating geometric shapes - Hidden on mobile */}
         <motion.div
-          className="absolute top-20 right-20 w-16 h-16 border-2 border-cyan-500/30 rounded-lg"
-          animate={{
+          className="absolute top-20 right-20 w-16 h-16 border-2 border-cyan-500/30 rounded-lg hidden lg:block"
+          animate={prefersReducedMotion ? {} : {
             y: [0, -20, 0],
             rotate: [0, 90, 0],
           }}
@@ -69,34 +61,11 @@ const Hero = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
+          style={{ willChange: 'transform' }}
         />
         <motion.div
-          className="absolute bottom-40 left-20 w-12 h-12 border-2 border-purple-500/30"
-          animate={{
-            y: [0, 20, 0],
-            rotate: [0, -90, 0],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-        <motion.div
-          className="absolute top-1/3 left-1/3 w-8 h-8 bg-cyan-500/20 rounded-full"
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/3 right-1/4 w-10 h-10 border-2 border-blue-500/30 rounded-full"
-          animate={{
+          className="absolute bottom-1/3 right-1/4 w-10 h-10 border-2 border-blue-500/30 rounded-full hidden lg:block"
+          animate={prefersReducedMotion ? {} : {
             scale: [1, 1.3, 1],
             opacity: [0.4, 0.7, 0.4],
           }}
@@ -105,6 +74,7 @@ const Hero = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
+          style={{ willChange: 'transform' }}
         />
       </div>
 
@@ -114,13 +84,13 @@ const Hero = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
             <motion.h2
               className="text-cyan-400 text-lg sm:text-xl md:text-2xl font-mono mb-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.1 }}
             >
               Hi, my name is
             </motion.h2>
@@ -128,7 +98,7 @@ const Hero = () => {
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 bg-gradient-to-r from-white via-cyan-100 to-white bg-clip-text text-transparent"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.2 }}
             >
               Reuel Richards
             </motion.h1>
@@ -136,7 +106,7 @@ const Hero = () => {
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-gray-400 via-cyan-300 to-gray-400 bg-clip-text text-transparent"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.3 }}
             >
               Software Engineer
             </motion.h2>
@@ -147,7 +117,7 @@ const Hero = () => {
             className="text-gray-300 text-lg sm:text-xl md:text-2xl max-w-3xl mx-auto mb-8 leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.4 }}
           >
             A forward-thinking software engineer specializing in full stack development
             with ReactJS and NodeJS. I design, build, and deliver clean, maintainable
@@ -159,7 +129,7 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
+            transition={{ delay: 0.5 }}
           >
             <motion.button
               onClick={() => scrollToSection('projects')}
@@ -184,7 +154,7 @@ const Hero = () => {
             className="flex gap-6 justify-center mb-12"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 0.6 }}
           >
             <motion.a
               href="https://github.com/Antonio313"
@@ -216,7 +186,7 @@ const Hero = () => {
           {/* Scroll Indicator */}
           <motion.div
             className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer"
-            animate={{ y: [0, 10, 0] }}
+            animate={prefersReducedMotion ? {} : { y: [0, 10, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
             onClick={() => scrollToSection('about')}
           >

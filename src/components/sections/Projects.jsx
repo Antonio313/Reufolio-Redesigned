@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { FiGithub, FiExternalLink } from 'react-icons/fi';
@@ -6,6 +6,7 @@ import { FiGithub, FiExternalLink } from 'react-icons/fi';
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const prefersReducedMotion = useReducedMotion();
 
   const projects = [
     {
@@ -60,7 +61,7 @@ const Projects = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.15,
       },
     },
   };
@@ -71,7 +72,7 @@ const Projects = () => {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.6,
+        duration: 0.4,
         ease: 'easeOut',
       },
     },
@@ -83,15 +84,15 @@ const Projects = () => {
       ref={ref}
       className="min-h-screen py-20 bg-gradient-to-b from-gray-900 to-gray-800 relative overflow-hidden"
     >
-      {/* Enhanced Background with animations */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Enhanced Background with animations - Simplified for mobile */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Radial gradient */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(6,182,212,0.05),transparent_50%)]"></div>
 
-        {/* Animated gradient orbs */}
+        {/* Animated gradient orbs - Reduced on mobile */}
         <motion.div
           className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-cyan-500/10 to-blue-500/5 rounded-full blur-3xl"
-          animate={{
+          animate={prefersReducedMotion ? {} : {
             scale: [1, 1.3, 1],
             x: [0, -50, 0],
             y: [0, 50, 0],
@@ -101,10 +102,11 @@ const Projects = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
+          style={{ willChange: 'transform' }}
         />
         <motion.div
-          className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-purple-500/10 to-pink-500/5 rounded-full blur-3xl"
-          animate={{
+          className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-purple-500/10 to-pink-500/5 rounded-full blur-3xl hidden md:block"
+          animate={prefersReducedMotion ? {} : {
             scale: [1.3, 1, 1.3],
             x: [0, 50, 0],
             y: [0, -50, 0],
@@ -114,24 +116,13 @@ const Projects = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.4, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
+          style={{ willChange: 'transform' }}
         />
 
-        {/* Floating code symbols */}
+        {/* Floating code symbols - Hidden on mobile */}
         <motion.div
-          className="absolute top-40 right-32 text-cyan-500/10 font-mono text-7xl"
-          animate={{
+          className="absolute top-40 right-32 text-cyan-500/10 font-mono text-7xl hidden lg:block"
+          animate={prefersReducedMotion ? {} : {
             y: [0, -30, 0],
             rotate: [0, 10, 0],
           }}
@@ -140,28 +131,15 @@ const Projects = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
+          style={{ willChange: 'transform' }}
         >
           {'</>'}
         </motion.div>
-        <motion.div
-          className="absolute bottom-32 left-32 text-purple-500/10 font-mono text-6xl"
-          animate={{
-            y: [0, 30, 0],
-            rotate: [0, -10, 0],
-          }}
-          transition={{
-            duration: 9,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        >
-          {'{}'}
-        </motion.div>
 
-        {/* Geometric shapes */}
+        {/* Geometric shapes - Hidden on mobile */}
         <motion.div
-          className="absolute top-1/4 left-1/4 w-20 h-20 border-2 border-cyan-500/20 rounded-lg"
-          animate={{
+          className="absolute top-1/4 left-1/4 w-20 h-20 border-2 border-cyan-500/20 rounded-lg hidden lg:block"
+          animate={prefersReducedMotion ? {} : {
             rotate: [0, 90, 180, 270, 360],
             scale: [1, 1.2, 1],
           }}
@@ -170,37 +148,14 @@ const Projects = () => {
             repeat: Infinity,
             ease: 'linear',
           }}
-        />
-        <motion.div
-          className="absolute bottom-1/3 right-1/3 w-16 h-16 border-2 border-purple-500/20"
-          animate={{
-            rotate: [0, -90, -180, -270, -360],
-            y: [0, -20, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-        <motion.div
-          className="absolute top-2/3 right-1/4 w-12 h-12 border-2 border-blue-500/20 rounded-full"
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.2, 0.5, 0.2],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
+          style={{ willChange: 'transform' }}
         />
 
-        {/* Floating particles */}
-        {[...Array(12)].map((_, i) => (
+        {/* Floating particles - Drastically reduced on mobile */}
+        {[...Array(prefersReducedMotion ? 0 : 3)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-cyan-400/20 rounded-full"
+            className="absolute w-2 h-2 bg-cyan-400/20 rounded-full hidden md:block"
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
@@ -224,7 +179,7 @@ const Projects = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
         >
           {/* Section Title */}
           <div className="flex items-center gap-4 mb-12">
@@ -240,7 +195,7 @@ const Projects = () => {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
           >
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <motion.div
                 key={project.title}
                 variants={itemVariants}
@@ -255,6 +210,7 @@ const Projects = () => {
                       : ''
                   }`}
                   whileHover={{ y: -5 }}
+                  style={{ willChange: 'transform' }}
                 >
                   <div className="p-8">
                     {/* Project Header */}
@@ -330,7 +286,7 @@ const Projects = () => {
             className="mt-12 text-center"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.8 }}
+            transition={{ delay: 0.6 }}
           >
             <motion.a
               href="https://github.com/Antonio313"

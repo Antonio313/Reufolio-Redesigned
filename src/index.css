@@ -25,6 +25,31 @@ code {
     monospace;
 }
 
+/* GPU Acceleration Hints for better mobile performance */
+.transform,
+[class*="motion-"],
+[class*="animate-"],
+.transition,
+button,
+a {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+}
+
+/* Reduce blur on mobile for better performance */
+@media (max-width: 768px) {
+  .blur-3xl {
+    filter: blur(60px) !important;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;

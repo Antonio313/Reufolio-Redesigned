@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import {
@@ -23,6 +23,7 @@ import { TbBrandReactNative } from 'react-icons/tb';
 const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const prefersReducedMotion = useReducedMotion();
 
   const skills = [
     { name: 'JavaScript', icon: SiJavascript, color: 'text-yellow-400' },
@@ -48,7 +49,7 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.05,
       },
     },
   };
@@ -59,7 +60,7 @@ const About = () => {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.5,
+        duration: 0.3,
       },
     },
   };
@@ -70,12 +71,12 @@ const About = () => {
       ref={ref}
       className="min-h-screen py-20 bg-gray-900 flex items-center relative overflow-hidden"
     >
-      {/* Enhanced Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Animated gradient orbs */}
+      {/* Enhanced Background decorative elements - Simplified for mobile */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Animated gradient orbs - Reduced on mobile */}
         <motion.div
           className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-full blur-3xl"
-          animate={{
+          animate={prefersReducedMotion ? {} : {
             scale: [1, 1.2, 1],
             x: [0, 30, 0],
             y: [0, -20, 0],
@@ -85,10 +86,11 @@ const About = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
+          style={{ willChange: 'transform' }}
         />
         <motion.div
-          className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-tr from-purple-500/10 to-pink-500/10 rounded-full blur-3xl"
-          animate={{
+          className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-tr from-purple-500/10 to-pink-500/10 rounded-full blur-3xl hidden md:block"
+          animate={prefersReducedMotion ? {} : {
             scale: [1.2, 1, 1.2],
             x: [0, -30, 0],
             y: [0, 20, 0],
@@ -98,12 +100,13 @@ const About = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
+          style={{ willChange: 'transform' }}
         />
 
-        {/* Animated code symbols */}
+        {/* Animated code symbols - Hidden on mobile */}
         <motion.div
-          className="absolute top-20 right-10 text-cyan-500/20 font-mono text-6xl transform"
-          animate={{
+          className="absolute top-20 right-10 text-cyan-500/20 font-mono text-6xl transform hidden lg:block"
+          animate={prefersReducedMotion ? {} : {
             rotate: [12, 20, 12],
             scale: [1, 1.1, 1],
           }}
@@ -112,28 +115,15 @@ const About = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
+          style={{ willChange: 'transform' }}
         >
           {'</>'}
         </motion.div>
-        <motion.div
-          className="absolute bottom-40 left-10 text-purple-500/20 font-mono text-5xl transform"
-          animate={{
-            rotate: [-12, -20, -12],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        >
-          {'{ }'}
-        </motion.div>
 
-        {/* Floating geometric shapes */}
+        {/* Floating geometric shapes - Hidden on mobile */}
         <motion.div
-          className="absolute top-1/2 right-1/4 w-32 h-32 border-2 border-cyan-500/20 rounded-full"
-          animate={{
+          className="absolute top-1/2 right-1/4 w-32 h-32 border-2 border-cyan-500/20 rounded-full hidden lg:block"
+          animate={prefersReducedMotion ? {} : {
             y: [0, -30, 0],
             scale: [1, 1.1, 1],
           }}
@@ -142,37 +132,14 @@ const About = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 left-1/4 w-24 h-24 border-2 border-purple-500/20 rotate-45"
-          animate={{
-            rotate: [45, 90, 45],
-            y: [0, 20, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-        <motion.div
-          className="absolute top-1/3 left-1/2 w-16 h-16 bg-blue-500/10 rounded-lg"
-          animate={{
-            rotate: [0, 180, 360],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
+          style={{ willChange: 'transform' }}
         />
 
-        {/* Floating particles */}
-        {[...Array(8)].map((_, i) => (
+        {/* Floating particles - Reduced count on mobile */}
+        {[...Array(prefersReducedMotion ? 0 : 3)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-cyan-400/30 rounded-full"
+            className="absolute w-2 h-2 bg-cyan-400/30 rounded-full hidden md:block"
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
@@ -195,7 +162,7 @@ const About = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
         >
           {/* Section Title */}
           <div className="flex items-center gap-4 mb-12">
@@ -210,7 +177,7 @@ const About = () => {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               className="relative"
           >
               {/* Decorative border */}
@@ -221,39 +188,39 @@ const About = () => {
                       className="text-gray-300 text-lg leading-relaxed"
                       initial={{ opacity: 0, y: 20 }}
                       animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ duration: 0.6, delay: 0.3 }}
+                      transition={{ duration: 0.4, delay: 0.2 }}
                   >
-                      I'm a passionate and results-driven software engineer specializing in full-stack development, with a proven track record of building clean, maintainable, 
+                      I'm a passionate and results-driven software engineer specializing in full-stack development, with a proven track record of building clean, maintainable,
                       and impactful digital solutions. I have honed my expertise while completing my <span className="text-cyan-400 font-semibold">BSc. in Computing at the University of Technology, Jamaica</span>, set to graduate in 2025.
                   </motion.p>
                   <motion.p
                       className="text-gray-300 text-lg leading-relaxed"
                       initial={{ opacity: 0, y: 20 }}
                       animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ duration: 0.6, delay: 0.4 }}
+                      transition={{ duration: 0.4, delay: 0.3 }}
                   >
-                      As the founder of <span className="text-cyan-400 font-semibold">Reuel's Web Services</span>, I thrive on tackling complex challenges—from designing a comprehensive <span className="text-purple-400">JavaFX Point of Sale system</span> 
-                      for an auto parts retailer to developing full-stack applications that boost client efficiency by up to <span className="text-purple-400">80%</span>. 
-                      I'm a hardcore problem solver at heart; I don't just write code, I <span className="text-cyan-400 font-semibold">get things done</span>, delivering robust applications like 
+                      As the founder of <span className="text-cyan-400 font-semibold">Reuel's Web Services</span>, I thrive on tackling complex challenges—from designing a comprehensive <span className="text-purple-400">JavaFX Point of Sale system</span>
+                      for an auto parts retailer to developing full-stack applications that boost client efficiency by up to <span className="text-purple-400">80%</span>.
+                      I'm a hardcore problem solver at heart; I don't just write code, I <span className="text-cyan-400 font-semibold">get things done</span>, delivering robust applications like
                       the <span className="text-purple-400">AI Code Grader</span> and scalable cloud-hosted portfolios.
                   </motion.p>
                   <motion.p
                     className="text-gray-300 text-lg leading-relaxed"
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 0.6 }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
                 >
-                    What truly drives me is the opportunity to solve novel problems. I'm an <span className="text-cyan-400 font-semibold">adaptable and rapid learner</span>, 
-                    consistently diving into new technologies and frameworks to find the optimal solution for each unique challenge. 
+                    What truly drives me is the opportunity to solve novel problems. I'm an <span className="text-cyan-400 font-semibold">adaptable and rapid learner</span>,
+                    consistently diving into new technologies and frameworks to find the optimal solution for each unique challenge.
                     Whether it's mastering a new cloud platform or architecting a system from the ground up, I find genuine excitement in turning complex requirements into elegant, functional reality.
                 </motion.p>
                   <motion.p
                       className="text-gray-300 text-lg leading-relaxed"
                       initial={{ opacity: 0, y: 20 }}
                       animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ duration: 0.6, delay: 0.5 }}
+                      transition={{ duration: 0.4, delay: 0.5 }}
                   >
-                      When I'm not architecting software solutions or delving into new technologies, I recharge by playing basketball, 
+                      When I'm not architecting software solutions or delving into new technologies, I recharge by playing basketball,
                       playing video games, and performing music on various instruments. I am deeply committed to continuous learning and passionately believe in pushing the boundaries of technology to create a tangible difference.
                   </motion.p>
               </div>
@@ -263,7 +230,7 @@ const About = () => {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
             >
               <h3 className="text-2xl font-bold text-white mb-6">
                 Technologies & Tools
@@ -287,6 +254,7 @@ const About = () => {
                         y: -5,
                       }}
                       whileTap={{ scale: 0.95 }}
+                      style={{ willChange: 'transform' }}
                     >
                       <skill.icon className={`${skill.color} text-4xl`} />
                       <span className="text-gray-300 text-sm font-medium text-center">
@@ -304,11 +272,12 @@ const About = () => {
             className="grid md:grid-cols-2 gap-8"
             initial={{ opacity: 0, y: 50 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
             <motion.div
               className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-xl border border-cyan-500/30 hover:border-cyan-500 hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-300"
               whileHover={{ scale: 1.02, y: -5 }}
+              style={{ willChange: 'transform' }}
             >
               <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">Education</h3>
               <div className="space-y-2">
@@ -322,6 +291,7 @@ const About = () => {
             <motion.div
               className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-xl border border-cyan-500/30 hover:border-cyan-500 hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-300"
               whileHover={{ scale: 1.02, y: -5 }}
+              style={{ willChange: 'transform' }}
             >
               <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">Current Role</h3>
               <div className="space-y-2">
