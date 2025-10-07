@@ -212,44 +212,52 @@ const About = () => {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
-            >
+          >
               {/* Decorative border */}
               <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 via-purple-500 to-cyan-500 rounded-full"></div>
 
               <div className="space-y-6">
-                <motion.p
-                  className="text-gray-300 text-lg leading-relaxed"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.3 }}
+                  <motion.p
+                      className="text-gray-300 text-lg leading-relaxed"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.6, delay: 0.3 }}
+                  >
+                      I'm a passionate and results-driven software engineer specializing in full-stack development, with a proven track record of building clean, maintainable, 
+                      and impactful digital solutions. I have honed my expertise while completing my <span className="text-cyan-400 font-semibold">BSc. in Computing at the University of Technology, Jamaica</span>, set to graduate in 2025.
+                  </motion.p>
+                  <motion.p
+                      className="text-gray-300 text-lg leading-relaxed"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.6, delay: 0.4 }}
+                  >
+                      As the founder of <span className="text-cyan-400 font-semibold">Reuel's Web Services</span>, I thrive on tackling complex challenges—from designing a comprehensive <span className="text-purple-400">JavaFX Point of Sale system</span> 
+                      for an auto parts retailer to developing full-stack applications that boost client efficiency by up to <span className="text-purple-400">80%</span>. 
+                      I'm a hardcore problem solver at heart; I don't just write code, I <span className="text-cyan-400 font-semibold">get things done</span>, delivering robust applications like 
+                      the <span className="text-purple-400">AI Code Grader</span> and scalable cloud-hosted portfolios.
+                  </motion.p>
+                  <motion.p
+                    className="text-gray-300 text-lg leading-relaxed"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.6, delay: 0.6 }}
                 >
-                  I'm a passionate software engineer with expertise in full stack development,
-                  specializing in building exceptional digital experiences. Currently pursuing my
-                  BSc. in Computing at the University of Technology, Jamaica, graduating in 2025.
+                    What truly drives me is the opportunity to solve novel problems. I'm an <span className="text-cyan-400 font-semibold">adaptable and rapid learner</span>, 
+                    consistently diving into new technologies and frameworks to find the optimal solution for each unique challenge. 
+                    Whether it's mastering a new cloud platform or architecting a system from the ground up, I find genuine excitement in turning complex requirements into elegant, functional reality.
                 </motion.p>
-                <motion.p
-                  className="text-gray-300 text-lg leading-relaxed"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  As the founder of <span className="text-cyan-400 font-semibold">Reuel's Web Services</span>,
-                  I've had the privilege of working on diverse projects ranging from e-commerce platforms
-                  to AI-powered grading systems. My approach combines technical excellence with
-                  user-centric design to deliver solutions that truly make a difference.
-                </motion.p>
-                <motion.p
-                  className="text-gray-300 text-lg leading-relaxed"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                >
-                  When I'm not coding, you can find me playing basketball, diving into video games,
-                  or playing musical instruments. I strongly believe in continuous learning and pushing the boundaries
-                  of what's possible with technology.
-                </motion.p>
+                  <motion.p
+                      className="text-gray-300 text-lg leading-relaxed"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.6, delay: 0.5 }}
+                  >
+                      When I'm not architecting software solutions or delving into new technologies, I recharge by playing basketball, 
+                      playing video games, and performing music on various instruments. I am deeply committed to continuous learning and passionately believe in pushing the boundaries of technology to create a tangible difference.
+                  </motion.p>
               </div>
-            </motion.div>
+          </motion.div>
 
             {/* Skills Grid */}
             <motion.div
