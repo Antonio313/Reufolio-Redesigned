@@ -168,7 +168,7 @@ Specifies the Node.js version:
 Configures Nixpacks builder to use Node.js 20:
 ```toml
 [phases.setup]
-nixPkgs = ['nodejs-20_x']
+nixPkgs = ['nodejs_20']
 ```
 
 ### .gitignore
