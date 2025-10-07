@@ -16,8 +16,12 @@ import {
   SiTypescript,
   SiDotnet,
   SiLaravel,
+  SiVuedotjs,
+  SiNextdotjs,
+  SiMysql,
+  SiGithub,
 } from 'react-icons/si';
-import { FaJava } from 'react-icons/fa';
+import { FaJava, FaDatabase } from 'react-icons/fa';
 import { TbBrandReactNative } from 'react-icons/tb';
 
 const About = () => {
@@ -29,10 +33,14 @@ const About = () => {
     { name: 'JavaScript', icon: SiJavascript, color: 'text-yellow-400' },
     { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-400' },
     { name: 'React', icon: SiReact, color: 'text-cyan-400' },
+    { name: 'Vue.js', icon: SiVuedotjs, color: 'text-green-400' },
+    { name: 'Next.js', icon: SiNextdotjs, color: 'text-white' },
     { name: 'React Native', icon: TbBrandReactNative, color: 'text-cyan-300' },
     { name: 'Node.js', icon: SiNodedotjs, color: 'text-green-500' },
     { name: 'MongoDB', icon: SiMongodb, color: 'text-green-600' },
     { name: 'PostgreSQL', icon: SiPostgresql, color: 'text-blue-500' },
+    { name: 'MySQL', icon: SiMysql, color: 'text-blue-400' },
+    { name: 'SQL Server', icon: FaDatabase, color: 'text-red-400' },
     { name: 'Python', icon: SiPython, color: 'text-blue-400' },
     { name: 'Java', icon: FaJava, color: 'text-orange-500' },
     { name: 'C', icon: SiC, color: 'text-blue-500' },
@@ -41,6 +49,7 @@ const About = () => {
     { name: 'Laravel', icon: SiLaravel, color: 'text-red-500' },
     { name: 'PHP', icon: SiPhp, color: 'text-purple-400' },
     { name: 'AWS', icon: SiAmazon, color: 'text-orange-400' },
+    { name: 'GitHub', icon: SiGithub, color: 'text-gray-300' },
     { name: 'Tailwind CSS', icon: SiTailwindcss, color: 'text-cyan-500' },
   ];
 
