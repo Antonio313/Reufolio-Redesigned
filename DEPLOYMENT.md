@@ -66,14 +66,14 @@ VITE_EMAILJS_PUBLIC_KEY=your_public_key
 
 Railway will automatically detect the configuration files and use them for deployment:
 
-- **Node.js Version:** 20.x (specified in `.nvmrc` and `nixpacks.toml`)
-- **Build Command:** `npm ci && npm run build`
+- **Node.js Version:** 22.x (specified in `.nvmrc` and `nixpacks.toml`)
+- **Build Command:** `npm ci --cache /tmp/.npm` (specified in `nixpacks.toml`)
 - **Start Command:** `npm run preview -- --host 0.0.0.0 --port $PORT`
 
 The project includes:
-- `.nvmrc` - Specifies Node.js 20.19.0
-- `nixpacks.toml` - Configures Nixpacks to use Node.js 20
-- `railway.json` - Defines build and start commands
+- `.nvmrc` - Specifies Node.js 22.12.0
+- `nixpacks.toml` - Configures Nixpacks to use Node.js 22 with custom build commands
+- `railway.json` - Defines deployment settings
 
 ### Domain Setup
 
@@ -117,10 +117,16 @@ Railway will:
 If you see errors like `EBADENGINE Unsupported engine` or `required: { node: '^20.19.0' }`:
 
 **Solution:** Ensure these files are committed to your repository:
-- `.nvmrc` (contains `20.19.0`)
-- `nixpacks.toml` (specifies Node.js 20)
+- `.nvmrc` (contains `22.12.0`)
+- `nixpacks.toml` (specifies Node.js 22)
 
-Railway will automatically detect these files and use Node.js 20.
+Railway will automatically detect these files and use Node.js 22.
+
+### Build Fails - Cache Lock Error
+
+If you see `EBUSY: resource busy or locked, rmdir '/app/node_modules/.cache'`:
+
+**Solution:** The `nixpacks.toml` file uses a custom cache directory (`/tmp/.npm`) to avoid this issue. Ensure it's committed to your repository.
 
 ### Build Fails - General
 
@@ -161,14 +167,23 @@ This shouldn't happen with Vite preview, but if it does:
 ### .nvmrc
 Specifies the Node.js version:
 ```
-20.19.0
+22.12.0
 ```
 
 ### nixpacks.toml
-Configures Nixpacks builder to use Node.js 20:
+Configures Nixpacks builder to use Node.js 22 with custom build settings:
 ```toml
 [phases.setup]
-nixPkgs = ['nodejs_20']
+nixPkgs = ['nodejs_22']
+
+[phases.install]
+cmds = ['npm ci --cache /tmp/.npm --prefer-offline --no-audit']
+
+[phases.build]
+cmds = ['npm run build']
+
+[start]
+cmd = 'npm run preview -- --host 0.0.0.0 --port $PORT'
 ```
 
 ### .gitignore
