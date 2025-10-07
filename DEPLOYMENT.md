@@ -7,6 +7,7 @@ This guide will walk you through deploying your Reufolio portfolio website to Ra
 1. A [Railway](https://railway.app) account
 2. A [GitHub](https://github.com) account
 3. EmailJS account with configured service (see EMAILJS_SETUP.md)
+4. Node.js 20 or higher (required by Vite 7)
 
 ## Step 1: Push to GitHub
 
@@ -63,10 +64,16 @@ VITE_EMAILJS_PUBLIC_KEY=your_public_key
 
 ### Deploy Configuration
 
-Railway will automatically detect the `railway.json` file and use it for deployment:
+Railway will automatically detect the configuration files and use them for deployment:
 
+- **Node.js Version:** 20.x (specified in `.nvmrc` and `nixpacks.toml`)
 - **Build Command:** `npm ci && npm run build`
 - **Start Command:** `npm run preview -- --host 0.0.0.0 --port $PORT`
+
+The project includes:
+- `.nvmrc` - Specifies Node.js 20.19.0
+- `nixpacks.toml` - Configures Nixpacks to use Node.js 20
+- `railway.json` - Defines build and start commands
 
 ### Domain Setup
 
@@ -105,11 +112,21 @@ Railway will:
 
 ## Troubleshooting
 
-### Build Fails
+### Build Fails - Node.js Version Error
+
+If you see errors like `EBADENGINE Unsupported engine` or `required: { node: '^20.19.0' }`:
+
+**Solution:** Ensure these files are committed to your repository:
+- `.nvmrc` (contains `20.19.0`)
+- `nixpacks.toml` (specifies Node.js 20)
+
+Railway will automatically detect these files and use Node.js 20.
+
+### Build Fails - General
 
 - Check Railway logs in the **"Deployments"** tab
 - Ensure all dependencies are in `package.json`
-- Verify Node.js version compatibility
+- Verify all configuration files are pushed to GitHub
 
 ### Contact Form Not Working
 
@@ -139,6 +156,19 @@ This shouldn't happen with Vite preview, but if it does:
     "restartPolicyMaxRetries": 10
   }
 }
+```
+
+### .nvmrc
+Specifies the Node.js version:
+```
+20.19.0
+```
+
+### nixpacks.toml
+Configures Nixpacks builder to use Node.js 20:
+```toml
+[phases.setup]
+nixPkgs = ['nodejs-20_x']
 ```
 
 ### .gitignore
