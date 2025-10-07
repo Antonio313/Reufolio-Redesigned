@@ -77,12 +77,58 @@ The project includes:
 
 ### Domain Setup
 
+#### Railway Default Domain
+
 1. In Railway dashboard, go to **"Settings"** tab
-2. Under **"Domains"**, Railway provides a free `.railway.app` domain
-3. (Optional) Add your custom domain:
+2. Under **"Domains"**, click **"Generate Domain"**
+3. Railway provides a free `.railway.app` domain (e.g., `reufolio-redesigned-production.up.railway.app`)
+4. Your site is immediately accessible at this URL
+
+#### Custom Domain Setup
+
+**Option A: Using `www` subdomain (Recommended for GoDaddy)**
+
+1. **In Railway:**
+   - Go to **"Settings"** → **"Domains"**
    - Click **"Custom Domain"**
-   - Enter your domain
-   - Add the CNAME record to your DNS provider as shown
+   - Enter: `www.reufolio.com`
+   - Copy the CNAME target (e.g., `91vek2ak.up.railway.app`)
+
+2. **In GoDaddy DNS Management:**
+   - **Type:** CNAME
+   - **Name:** `www`
+   - **Value:** `91vek2ak.up.railway.app` (or your Railway CNAME)
+   - **TTL:** 600
+   - Click **Save**
+
+3. **Set up root domain redirect in GoDaddy:**
+   - Go to **Domain Settings** → **Forwarding**
+   - **Forward from:** `reufolio.com`
+   - **Forward to:** `https://www.reufolio.com`
+   - **Forward type:** Permanent (301)
+   - Click **Save**
+
+**Option B: Using Cloudflare (Best for apex domain)**
+
+GoDaddy doesn't support CNAME records at the root domain (`@`). To use `reufolio.com` without `www`:
+
+1. **Sign up at [Cloudflare](https://cloudflare.com)** (free)
+2. **Add your domain** `reufolio.com`
+3. **Change nameservers at GoDaddy** to Cloudflare's nameservers (provided during setup)
+4. **In Cloudflare DNS:**
+   - **Type:** CNAME
+   - **Name:** `@`
+   - **Target:** `91vek2ak.up.railway.app`
+   - **Proxy status:** Proxied (orange cloud)
+   - Click **Save**
+5. **In Railway:**
+   - Add custom domain: `reufolio.com`
+
+Cloudflare allows CNAME flattening for apex domains and provides additional benefits:
+- Free SSL
+- CDN and caching
+- DDoS protection
+- Analytics
 
 ## Step 3: Verify Deployment
 
@@ -140,11 +186,38 @@ If you see `EBUSY: resource busy or locked, rmdir '/app/node_modules/.cache'`:
 - Check EmailJS service is active
 - Review browser console for errors
 
+### Custom Domain Not Working
+
+**CNAME Error - "Invalid Record Data" (GoDaddy)**
+
+If GoDaddy shows "Invalid Record Data" when adding a CNAME:
+- **Problem:** GoDaddy doesn't allow CNAME records at the root domain (`@`)
+- **Solution:** Use `www` subdomain instead (see Domain Setup → Option A)
+- **Alternative:** Switch to Cloudflare for apex domain support (see Domain Setup → Option B)
+
+**DNS Propagation Takes Time**
+
+After adding DNS records:
+- Changes can take 5 minutes to 48 hours to propagate
+- Use [DNS Checker](https://dnschecker.org) to verify propagation
+- Try accessing your domain in incognito/private mode
+
 ### 404 Errors on Refresh
 
 This shouldn't happen with Vite preview, but if it does:
 - Ensure `railway.json` uses the correct start command
 - Check Railway logs for routing issues
+
+### Site Not Accessible / CORS Errors
+
+**No CORS configuration needed!** Your site is a static frontend application that works on any domain:
+- Railway default domain: Works immediately
+- Custom domains: Work once DNS is configured
+- EmailJS handles its own CORS automatically
+
+If you see CORS errors, they're from EmailJS:
+- Verify environment variables are set in Railway
+- Check EmailJS dashboard for service status
 
 ## Configuration Files
 
