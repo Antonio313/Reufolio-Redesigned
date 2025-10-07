@@ -1,72 +1,63 @@
 # Reufolio - Digital Portfolio
 
-A modern, responsive portfolio website showcasing software engineering projects and skills. Built with React.js and Node.js, featuring smooth animations, a contact form with email integration, and optimized for deployment on Railway.
-
-![Portfolio Preview](./preview.png)
+A modern, responsive portfolio website showcasing software engineering projects and skills. Built with React.js and featuring smooth animations, a contact form with EmailJS integration, and optimized for deployment on Railway.
 
 ## 🚀 Features
 
-- **Modern Design**: Dark-themed, professional design with smooth animations
-- **Responsive**: Fully responsive layout that works on all devices
-- **Projects Showcase**: Display your best work with detailed project cards
-- **Contact Form**: Integrated with SendGrid for email notifications
-- **Resume Download**: Easy access to downloadable resume
+- **Modern Design**: Dark-themed, professional design with animated backgrounds and smooth transitions
+- **Fully Responsive**: Works flawlessly on all devices - desktop, tablet, and mobile
+- **Projects Showcase**: Display featured projects with detailed descriptions and live demos
+- **Contact Form**: Email integration via EmailJS - no backend required
+- **Resume Download**: One-click resume download functionality
+- **Animated Backgrounds**: Gradient orbs, floating particles, and code symbols throughout
 - **SEO Optimized**: Meta tags and semantic HTML for better search engine visibility
-- **Fast Performance**: Built with Vite for lightning-fast development and optimized builds
+- **Fast Performance**: Built with Vite for lightning-fast development and optimized production builds
 
 ## 📁 Project Structure
 
 ```
-Reufolio Redesigned/
-├── reufolio/              # Frontend React application
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── sections/
-│   │   │   │   ├── Hero.jsx
-│   │   │   │   ├── About.jsx
-│   │   │   │   ├── Projects.jsx
-│   │   │   │   └── Contact.jsx
-│   │   │   ├── Navbar.jsx
-│   │   │   └── Footer.jsx
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
-│   ├── public/
-│   └── package.json
-└── backend/               # Backend Node.js/Express server
-    ├── server.js
-    ├── .env.example
-    └── package.json
+reufolio/
+├── src/
+│   ├── components/
+│   │   ├── sections/
+│   │   │   ├── Hero.jsx         # Landing section with CTA
+│   │   │   ├── About.jsx        # Skills and bio section
+│   │   │   ├── Projects.jsx     # Featured projects showcase
+│   │   │   └── Contact.jsx      # Contact form with EmailJS
+│   │   ├── Navbar.jsx           # Navigation with smooth scroll
+│   │   └── Footer.jsx           # Footer with social links
+│   ├── App.jsx                  # Main application component
+│   ├── main.jsx                 # React entry point
+│   └── index.css                # Global styles and Tailwind directives
+├── public/
+│   ├── logo.svg                 # Custom Reufolio logo
+│   ├── favicon.svg              # Custom favicon
+│   └── resume.pdf               # Downloadable resume
+├── railway.json                 # Railway deployment config
+├── tailwind.config.js           # Tailwind CSS configuration
+└── package.json                 # Dependencies and scripts
 ```
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- **React.js** - UI library
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Styling
-- **Framer Motion** - Animations
-- **React Icons** - Icon library
-- **Axios** - HTTP client
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express** - Web framework
-- **SendGrid** - Email service
-- **CORS** - Cross-origin resource sharing
-- **dotenv** - Environment variables
+- **React 19.1.1** - UI library
+- **Vite 7.1.7** - Build tool and dev server
+- **Tailwind CSS 3.4** - Utility-first CSS framework
+- **Framer Motion 12.23** - Animation library
+- **React Icons 5.5** - Icon components
+- **EmailJS** - Frontend email service (no backend needed)
 
 ## 📦 Installation
 
 ### Prerequisites
-- Node.js (v14 or higher)
+- Node.js (v18 or higher recommended)
 - npm or yarn
-- SendGrid account (for email functionality)
 
-### Frontend Setup
+### Setup
 
-1. Navigate to the frontend directory:
+1. Clone the repository:
 ```bash
+git clone https://github.com/YOUR_USERNAME/reufolio.git
 cd reufolio
 ```
 
@@ -80,141 +71,156 @@ npm install
 cp .env.example .env
 ```
 
-4. Update the `.env` file with your backend URL:
+4. Configure EmailJS environment variables in `.env`:
 ```env
-VITE_API_URL=http://localhost:5000
+VITE_EMAILJS_SERVICE_ID=your_service_id_here
+VITE_EMAILJS_TEMPLATE_ID=your_template_id_here
+VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
 ```
+
+See [EMAILJS_SETUP.md](./EMAILJS_SETUP.md) for detailed EmailJS configuration instructions.
 
 5. Start the development server:
 ```bash
 npm run dev
 ```
 
-The frontend will be available at `http://localhost:5173`
+The application will be available at `http://localhost:5173`
 
-### Backend Setup
+## 📧 EmailJS Setup
 
-1. Navigate to the backend directory:
-```bash
-cd backend
-```
+EmailJS allows you to send emails directly from the frontend without a backend server.
 
-2. Install dependencies:
-```bash
-npm install
-```
+**Quick Setup:**
 
-3. Create a `.env` file based on `.env.example`:
-```bash
-cp .env.example .env
-```
+1. Create a free account at [EmailJS](https://www.emailjs.com/)
+2. Add an email service (Gmail, Outlook, etc.)
+3. Create an email template with these variables:
+   - `{{from_name}}`
+   - `{{from_email}}`
+   - `{{message}}`
+   - `{{to_email}}`
+4. Get your Service ID, Template ID, and Public Key
+5. Add them to your `.env` file
 
-4. Configure your environment variables:
-```env
-SENDGRID_API_KEY=your_sendgrid_api_key_here
-SENDGRID_FROM_EMAIL=noreply@reufolio.com
-PORT=5000
-```
-
-5. Start the server:
-```bash
-npm start
-```
-
-The backend will be available at `http://localhost:5000`
+For detailed step-by-step instructions, see [EMAILJS_SETUP.md](./EMAILJS_SETUP.md).
 
 ## 🚂 Railway Deployment
 
-### Deploy Backend
+This project is pre-configured for easy deployment on Railway.
 
-1. Create a new Railway project for the backend
-2. Connect your GitHub repository
-3. Set the root directory to `/backend`
-4. Add environment variables:
-   - `SENDGRID_API_KEY`
-   - `SENDGRID_FROM_EMAIL`
-   - `PORT` (Railway will set this automatically)
-5. Deploy!
+**Quick Deploy:**
 
-### Deploy Frontend
+1. Push your code to GitHub
+2. Go to [Railway](https://railway.app) and create a new project
+3. Connect your GitHub repository
+4. Add environment variables (EmailJS credentials)
+5. Deploy automatically!
 
-1. Create a new Railway project for the frontend
-2. Connect your GitHub repository
-3. Set the root directory to `/reufolio`
-4. Add environment variable:
-   - `VITE_API_URL` (your backend Railway URL)
-5. Deploy!
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 
-## 📧 SendGrid Setup
+### Environment Variables for Production
 
-1. Create a [SendGrid account](https://sendgrid.com/)
-2. Verify your sender email address
-3. Create an API key with "Mail Send" permissions
-4. Add the API key to your backend `.env` file
-5. Update `SENDGRID_FROM_EMAIL` with your verified email
+In Railway dashboard, add these variables:
+
+```
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+## 🏗️ Building for Production
+
+Build the production-ready application:
+
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+The build output will be in the `dist` directory.
 
 ## 📝 Customization
 
 ### Update Personal Information
 
-Edit the following files to personalize your portfolio:
+Edit these files to personalize your portfolio:
 
-- `reufolio/src/components/sections/Hero.jsx` - Name, title, and bio
-- `reufolio/src/components/sections/About.jsx` - About section and skills
-- `reufolio/src/components/sections/Projects.jsx` - Project details
-- `reufolio/index.html` - SEO meta tags
+- **[Hero.jsx](./src/components/sections/Hero.jsx)** - Name, title, tagline, and CTA
+- **[About.jsx](./src/components/sections/About.jsx)** - Bio, skills, and technologies
+- **[Projects.jsx](./src/components/sections/Projects.jsx)** - Project details, descriptions, and links
+- **[Footer.jsx](./src/components/Footer.jsx)** - Social media links
+- **[index.html](./index.html)** - SEO meta tags, title, description
 
 ### Add Your Resume
 
-1. Add your resume PDF to `reufolio/public/resume.pdf`
-2. The download link is already configured in the Navbar
+1. Replace `public/resume.pdf` with your resume
+2. The download link in the navbar will automatically use it
 
-### Change Colors
+### Customize Colors
 
-Edit `reufolio/tailwind.config.js` to customize the color scheme.
+The portfolio uses a cyan/blue gradient theme. To customize:
 
-## 🏗️ Building for Production
+- Edit color classes in component files (e.g., `text-cyan-400`, `from-cyan-500`)
+- Modify `tailwind.config.js` for global color scheme changes
 
-### Frontend
-```bash
-cd reufolio
-npm run build
+### Add/Remove Skills
+
+Edit the `skills` array in [About.jsx](./src/components/sections/About.jsx:67-82):
+
+```jsx
+const skills = [
+  { name: 'JavaScript', icon: SiJavascript, color: 'text-yellow-400' },
+  // Add your skills here
+];
 ```
 
-The build output will be in the `dist` directory.
+### Add More Projects
 
-### Preview Production Build
-```bash
-npm run preview
-```
+Edit the `projects` array in [Projects.jsx](./src/components/sections/Projects.jsx:223-308) to add or modify projects.
 
-## 📱 Mobile Responsive
+## 📱 Responsive Design
 
-The portfolio is fully responsive and tested on:
-- Desktop (1920px+)
-- Laptop (1024px - 1919px)
-- Tablet (768px - 1023px)
-- Mobile (320px - 767px)
+Fully responsive and tested on:
+- **Desktop**: 1920px+
+- **Laptop**: 1024px - 1919px
+- **Tablet**: 768px - 1023px
+- **Mobile**: 320px - 767px
 
 ## 🎨 Design Features
 
-- Smooth scroll navigation
-- Animated section transitions
-- Hover effects on interactive elements
-- Custom scrollbar
-- Loading states for forms
-- Success/Error notifications
+- **Smooth Scroll Navigation** - Seamless section transitions
+- **Framer Motion Animations** - Fade-ins, slides, and parallax effects
+- **Animated Backgrounds** - Gradient orbs, floating shapes, particles
+- **Interactive Elements** - Hover effects, scale transforms, gradient glows
+- **Custom Scrollbar** - Cyan-themed scrollbar design
+- **Loading States** - Visual feedback for form submission
+- **Success/Error Notifications** - User-friendly form feedback
 
 ## 🔒 Security
 
-- Environment variables for sensitive data
-- CORS configuration
+- Environment variables for sensitive API keys
+- `.gitignore` configured to exclude `.env` files
 - Input validation on contact form
-- Email sanitization
+- EmailJS handles email sanitization
 
-## 📄 License
+## 📄 Scripts
 
-This project is open source and available under the [MIT License](LICENSE).
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint
+
+## 📚 Documentation
+
+- [DEPLOYMENT.md](./DEPLOYMENT.md) - Detailed deployment guide for Railway
+- [EMAILJS_SETUP.md](./EMAILJS_SETUP.md) - Complete EmailJS configuration
+- [BACKEND_REMOVED.md](./BACKEND_REMOVED.md) - Notes on backend removal
 
 ## 👤 Author
 
@@ -227,7 +233,9 @@ This project is open source and available under the [MIT License](LICENSE).
 
 - Icons from [React Icons](https://react-icons.github.io/react-icons/)
 - Animations from [Framer Motion](https://www.framer.com/motion/)
-- Email service by [SendGrid](https://sendgrid.com/)
+- Email service by [EmailJS](https://www.emailjs.com/)
+- Styling with [Tailwind CSS](https://tailwindcss.com/)
+- Built with [Vite](https://vite.dev/)
 
 ---
 
