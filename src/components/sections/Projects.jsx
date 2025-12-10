@@ -15,7 +15,7 @@ const Projects = () => {
         'A modern, responsive portfolio website showcasing my software engineering projects and skills. Features include smooth animations, contact form with email integration, and resume download functionality. Built with performance and user experience in mind.',
       tech: ['React', 'Node.js', 'MongoDB', 'Framer Motion', 'Tailwind CSS', 'EmailJS'],
       github: 'https://github.com/Antonio313',
-      live: 'https://reufolio.com',
+      live: 'https://reufolio.online',
       featured: true,
     },
     {
