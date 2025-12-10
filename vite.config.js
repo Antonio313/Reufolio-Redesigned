@@ -7,8 +7,8 @@ export default defineConfig({
   preview: {
     allowedHosts: [
       'reufolio-redesigned-production.up.railway.app',
-      'www.reufolio.com',
-      'reufolio.com',
+      'www.reufolio.online',
+      'reufolio.online',
       '.railway.app', // Allow all Railway domains
       '.up.railway.app', // Allow all Railway preview domains
     ],
