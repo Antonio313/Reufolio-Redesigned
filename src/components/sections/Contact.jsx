@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { FiMail, FiUser, FiMessageSquare, FiSend, FiCheckCircle } from 'react-icons/fi';
+import { FiMail, FiUser, FiMessageSquare, FiSend, FiCheckCircle, FiPhone } from 'react-icons/fi';
 import emailjs from '@emailjs/browser';
+import { personalInfo } from '../../data';
 
 const Contact = () => {
   const ref = useRef(null);
@@ -45,7 +46,7 @@ const Contact = () => {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
-          to_email: 'reuelrichards1@gmail.com',
+          to_email: personalInfo.email,
         },
         publicKey
       );
@@ -62,7 +63,7 @@ const Contact = () => {
       setStatus({
         loading: false,
         success: false,
-        error: 'Failed to send message. Please try again or email me directly at reuelrichards1@gmail.com',
+        error: `Failed to send message. Please try again or email me directly at ${personalInfo.email}`,
       });
     }
   };
@@ -118,10 +119,24 @@ const Contact = () => {
                   <div>
                     <p className="text-gray-400 text-sm">Email</p>
                     <a
-                      href="mailto:reuelrichards1@gmail.com"
+                      href={`mailto:${personalInfo.email}`}
                       className="text-white hover:text-cyan-400 transition-colors"
                     >
-                      reuelrichards1@gmail.com
+                      {personalInfo.email}
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+                    <FiPhone className="text-cyan-400 text-xl" />
+                  </div>
+                  <div>
+                    <p className="text-gray-400 text-sm">Phone</p>
+                    <a
+                      href={`tel:${personalInfo.phone}`}
+                      className="text-white hover:text-cyan-400 transition-colors"
+                    >
+                      {personalInfo.phone}
                     </a>
                   </div>
                 </div>

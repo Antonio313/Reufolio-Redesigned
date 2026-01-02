@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { personalInfo } from '../data';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -68,8 +69,8 @@ const Navbar = () => {
               </motion.button>
             ))}
             <motion.a
-              href="/resume.pdf"
-              download
+              href={personalInfo.resumePath}
+              download="Reuel_Richards_Resume.pdf"
               className="px-4 py-2 bg-cyan-500 text-gray-900 rounded-lg font-semibold hover:bg-cyan-400 transition-colors duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -111,8 +112,8 @@ const Navbar = () => {
             </button>
           ))}
           <a
-            href="/resume.pdf"
-            download
+            href={personalInfo.resumePath}
+            download="Reuel_Richards_Resume.pdf"
             className="block w-full text-center px-3 py-2 bg-cyan-500 text-gray-900 rounded-lg font-semibold hover:bg-cyan-400 transition-colors duration-300"
           >
             Download Resume

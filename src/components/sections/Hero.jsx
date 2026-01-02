@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { FiGithub, FiLinkedin, FiMail, FiArrowDown } from 'react-icons/fi';
+import { personalInfo } from '../../data';
 
 const Hero = () => {
   const prefersReducedMotion = useReducedMotion();
@@ -100,7 +101,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              Reuel Richards
+              {personalInfo.name}
             </motion.h1>
             <motion.h2
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-gray-400 via-cyan-300 to-gray-400 bg-clip-text text-transparent"
@@ -108,7 +109,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Software Engineer
+              {personalInfo.title}
             </motion.h2>
           </motion.div>
 
@@ -119,9 +120,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            A forward-thinking software engineer specializing in full stack development
-            with ReactJS and NodeJS. I design, build, and deliver clean, maintainable
-            applications that solve real-world problems.
+            {personalInfo.tagline}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -157,7 +156,7 @@ const Hero = () => {
             transition={{ delay: 0.6 }}
           >
             <motion.a
-              href="https://github.com/Antonio313"
+              href={personalInfo.social.github}
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
@@ -166,7 +165,7 @@ const Hero = () => {
               <FiGithub size={32} />
             </motion.a>
             <motion.a
-              href="https://linkedin.com/in/reuel-richards-876b221aa/"
+              href={personalInfo.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
@@ -175,7 +174,7 @@ const Hero = () => {
               <FiLinkedin size={32} />
             </motion.a>
             <motion.a
-              href="mailto:reuelrichards1@gmail.com"
+              href={personalInfo.social.email}
               className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
               whileHover={{ y: -5 }}
             >

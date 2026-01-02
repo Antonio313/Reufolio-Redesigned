@@ -1,57 +1,12 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import {
-  SiJavascript,
-  SiReact,
-  SiNodedotjs,
-  SiMongodb,
-  SiPostgresql,
-  SiPython,
-  SiC,
-  SiCplusplus,
-  SiAmazon,
-  SiTailwindcss,
-  SiPhp,
-  SiTypescript,
-  SiDotnet,
-  SiLaravel,
-  SiVuedotjs,
-  SiNextdotjs,
-  SiMysql,
-  SiGithub,
-} from 'react-icons/si';
-import { FaJava, FaDatabase } from 'react-icons/fa';
-import { TbBrandReactNative } from 'react-icons/tb';
+import { experience, skills } from '../../data';
 
 const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const prefersReducedMotion = useReducedMotion();
-
-  const skills = [
-    { name: 'JavaScript', icon: SiJavascript, color: 'text-yellow-400' },
-    { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-400' },
-    { name: 'React', icon: SiReact, color: 'text-cyan-400' },
-    { name: 'Vue.js', icon: SiVuedotjs, color: 'text-green-400' },
-    { name: 'Next.js', icon: SiNextdotjs, color: 'text-white' },
-    { name: 'React Native', icon: TbBrandReactNative, color: 'text-cyan-300' },
-    { name: 'Node.js', icon: SiNodedotjs, color: 'text-green-500' },
-    { name: 'MongoDB', icon: SiMongodb, color: 'text-green-600' },
-    { name: 'PostgreSQL', icon: SiPostgresql, color: 'text-blue-500' },
-    { name: 'MySQL', icon: SiMysql, color: 'text-blue-400' },
-    { name: 'SQL Server', icon: FaDatabase, color: 'text-red-400' },
-    { name: 'Python', icon: SiPython, color: 'text-blue-400' },
-    { name: 'Java', icon: FaJava, color: 'text-orange-500' },
-    { name: 'C', icon: SiC, color: 'text-blue-500' },
-    { name: 'C++', icon: SiCplusplus, color: 'text-blue-600' },
-    { name: 'ASP.NET', icon: SiDotnet, color: 'text-purple-500' },
-    { name: 'Laravel', icon: SiLaravel, color: 'text-red-500' },
-    { name: 'PHP', icon: SiPhp, color: 'text-purple-400' },
-    { name: 'AWS', icon: SiAmazon, color: 'text-orange-400' },
-    { name: 'GitHub', icon: SiGithub, color: 'text-gray-300' },
-    { name: 'Tailwind CSS', icon: SiTailwindcss, color: 'text-cyan-500' },
-  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -199,8 +154,10 @@ const About = () => {
                       animate={isInView ? { opacity: 1, y: 0 } : {}}
                       transition={{ duration: 0.4, delay: 0.2 }}
                   >
-                      I'm a passionate and results-driven software engineer specializing in full-stack development, with a proven track record of building clean, maintainable,
-                      and impactful digital solutions. I have honed my expertise while completing my <span className="text-cyan-400 font-semibold">BSc. in Computing at the University of Technology, Jamaica</span>, set to graduate in 2025.
+                      Full Stack Software Engineer with <span className="text-cyan-400 font-semibold">2+ years of professional experience</span> building scalable,
+                      production-ready applications. Specialized in React, Node.js, TypeScript, and cloud
+                      infrastructure (AWS, Railway). I deliver end-to-end solutions that drive measurable
+                      business impact.
                   </motion.p>
                   <motion.p
                       className="text-gray-300 text-lg leading-relaxed"
@@ -208,10 +165,11 @@ const About = () => {
                       animate={isInView ? { opacity: 1, y: 0 } : {}}
                       transition={{ duration: 0.4, delay: 0.3 }}
                   >
-                      As the founder of <span className="text-cyan-400 font-semibold">Reuel's Web Services</span>, I thrive on tackling complex challenges—from designing a comprehensive <span className="text-purple-400">JavaFX Point of Sale system</span>
-                      for an auto parts retailer to developing full-stack applications that boost client efficiency by up to <span className="text-purple-400">80%</span>.
-                      I'm a hardcore problem solver at heart; I don't just write code, I <span className="text-cyan-400 font-semibold">get things done</span>, delivering robust applications like
-                      the <span className="text-purple-400">AI Code Grader</span> and scalable cloud-hosted portfolios.
+                      As the founder of <span className="text-cyan-400 font-semibold">Reuel's Web Services</span>, I've architected and delivered complex systems
+                      ranging from freight management platforms to AI-powered educational tools. My approach
+                      emphasizes <span className="text-purple-400">clean, maintainable code</span>, comprehensive testing, and cross-functional
+                      collaboration. I thrive in Agile environments where I can own features from conception
+                      through deployment.
                   </motion.p>
                   <motion.p
                     className="text-gray-300 text-lg leading-relaxed"
@@ -219,9 +177,9 @@ const About = () => {
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.4, delay: 0.4 }}
                 >
-                    What truly drives me is the opportunity to solve novel problems. I'm an <span className="text-cyan-400 font-semibold">adaptable and rapid learner</span>,
-                    consistently diving into new technologies and frameworks to find the optimal solution for each unique challenge.
-                    Whether it's mastering a new cloud platform or architecting a system from the ground up, I find genuine excitement in turning complex requirements into elegant, functional reality.
+                    I'm a <span className="text-cyan-400 font-semibold">rapid learner</span> who adapts to new technologies quickly, whether mastering a new cloud
+                    platform or architecting systems from the ground up. My product-first mindset ensures
+                    solutions align with business goals while maintaining technical excellence.
                 </motion.p>
                   <motion.p
                       className="text-gray-300 text-lg leading-relaxed"
@@ -229,50 +187,205 @@ const About = () => {
                       animate={isInView ? { opacity: 1, y: 0 } : {}}
                       transition={{ duration: 0.4, delay: 0.5 }}
                   >
-                      When I'm not architecting software solutions or delving into new technologies, I recharge by playing basketball,
-                      playing video games, and performing music on various instruments. I am deeply committed to continuous learning and passionately believe in pushing the boundaries of technology to create a tangible difference.
+                      Currently completing my <span className="text-cyan-400 font-semibold">BSc in Computer Science</span> at the University of Technology, Jamaica
+                      (2025). Beyond coding, I'm deeply passionate about <span className="text-purple-400">basketball</span> – whether playing competitively or watching
+                      the NBA. Music is another cornerstone of my life; I play multiple instruments including <span className="text-purple-400">guitar, piano, and drums</span>,
+                      and I'm always exploring new genres and techniques. I also enjoy <span className="text-purple-400">gaming</span> as a way to unwind and connect with friends,
+                      particularly strategy and RPG titles. These creative pursuits fuel my problem-solving abilities and keep me balanced.
+                  </motion.p>
+                  <motion.p
+                      className="text-gray-300 text-lg leading-relaxed"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.4, delay: 0.6 }}
+                  >
+                      I believe in <span className="text-cyan-400 font-semibold">continuous growth</span> – both professionally and personally. Whether it's learning
+                      a new programming language, mastering a new song, or improving my basketball skills, I approach every challenge with curiosity
+                      and determination. Fluent in <span className="text-purple-400">English</span> with basic <span className="text-purple-400">Spanish</span> proficiency.
                   </motion.p>
               </div>
           </motion.div>
 
-            {/* Skills Grid */}
+            {/* Skills Grid - Categorized */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
+              className="space-y-8"
             >
               <h3 className="text-2xl font-bold text-white mb-6">
                 Technologies & Tools
               </h3>
-              <motion.div
-                className="grid grid-cols-3 gap-4"
-                variants={containerVariants}
-                initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
-              >
-                {skills.map((skill, index) => (
-                  <motion.div
-                    key={skill.name}
-                    variants={itemVariants}
-                    className="group relative"
-                  >
+
+              {/* Languages & Runtime */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <h4 className="text-lg font-semibold text-gray-300">Languages & Runtime</h4>
+                  <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/30 to-transparent"></div>
+                </div>
+                <motion.div
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate={isInView ? 'visible' : 'hidden'}
+                >
+                  {skills.languages.map((skill) => (
                     <motion.div
-                      className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl border border-gray-700 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col items-center justify-center gap-3 cursor-pointer"
-                      whileHover={{
-                        scale: 1.05,
-                        y: -5,
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                      style={{ willChange: 'transform' }}
+                      key={skill.name}
+                      variants={itemVariants}
+                      className="group relative"
                     >
-                      <skill.icon className={`${skill.color} text-4xl`} />
-                      <span className="text-gray-300 text-sm font-medium text-center">
-                        {skill.name}
-                      </span>
+                      <motion.div
+                        className="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border border-gray-700 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col items-center justify-center gap-2 cursor-pointer"
+                        whileHover={{ scale: 1.05, y: -5 }}
+                        whileTap={{ scale: 0.95 }}
+                        style={{ willChange: 'transform' }}
+                      >
+                        <skill.icon className={`${skill.color} text-3xl`} />
+                        <span className="text-gray-300 text-xs font-medium text-center">
+                          {skill.name}
+                        </span>
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                ))}
-              </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+
+              {/* Frontend Frameworks */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <h4 className="text-lg font-semibold text-gray-300">Frontend Frameworks</h4>
+                  <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/30 to-transparent"></div>
+                </div>
+                <motion.div
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate={isInView ? 'visible' : 'hidden'}
+                >
+                  {skills.frontend.map((skill) => (
+                    <motion.div
+                      key={skill.name}
+                      variants={itemVariants}
+                      className="group relative"
+                    >
+                      <motion.div
+                        className="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border border-gray-700 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col items-center justify-center gap-2 cursor-pointer"
+                        whileHover={{ scale: 1.05, y: -5 }}
+                        whileTap={{ scale: 0.95 }}
+                        style={{ willChange: 'transform' }}
+                      >
+                        <skill.icon className={`${skill.color} text-3xl`} />
+                        <span className="text-gray-300 text-xs font-medium text-center">
+                          {skill.name}
+                        </span>
+                      </motion.div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+
+              {/* Backend & Databases */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <h4 className="text-lg font-semibold text-gray-300">Backend & Databases</h4>
+                  <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/30 to-transparent"></div>
+                </div>
+                <motion.div
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate={isInView ? 'visible' : 'hidden'}
+                >
+                  {skills.backend.map((skill) => (
+                    <motion.div
+                      key={skill.name}
+                      variants={itemVariants}
+                      className="group relative"
+                    >
+                      <motion.div
+                        className="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border border-gray-700 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col items-center justify-center gap-2 cursor-pointer"
+                        whileHover={{ scale: 1.05, y: -5 }}
+                        whileTap={{ scale: 0.95 }}
+                        style={{ willChange: 'transform' }}
+                      >
+                        <skill.icon className={`${skill.color} text-3xl`} />
+                        <span className="text-gray-300 text-xs font-medium text-center">
+                          {skill.name}
+                        </span>
+                      </motion.div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+
+              {/* DevOps & Cloud */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <h4 className="text-lg font-semibold text-gray-300">DevOps & Cloud</h4>
+                  <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/30 to-transparent"></div>
+                </div>
+                <motion.div
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate={isInView ? 'visible' : 'hidden'}
+                >
+                  {skills.devops.map((skill) => (
+                    <motion.div
+                      key={skill.name}
+                      variants={itemVariants}
+                      className="group relative"
+                    >
+                      <motion.div
+                        className="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border border-gray-700 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col items-center justify-center gap-2 cursor-pointer"
+                        whileHover={{ scale: 1.05, y: -5 }}
+                        whileTap={{ scale: 0.95 }}
+                        style={{ willChange: 'transform' }}
+                      >
+                        <skill.icon className={`${skill.color} text-3xl`} />
+                        <span className="text-gray-300 text-xs font-medium text-center">
+                          {skill.name}
+                        </span>
+                      </motion.div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+
+              {/* Professional Practices */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <h4 className="text-lg font-semibold text-gray-300">Professional Practices</h4>
+                  <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/30 to-transparent"></div>
+                </div>
+                <motion.div
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate={isInView ? 'visible' : 'hidden'}
+                >
+                  {skills.practices.map((skill) => (
+                    <motion.div
+                      key={skill.name}
+                      variants={itemVariants}
+                      className="group relative"
+                    >
+                      <motion.div
+                        className="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border border-gray-700 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col items-center justify-center gap-2 cursor-pointer"
+                        whileHover={{ scale: 1.05, y: -5 }}
+                        whileTap={{ scale: 0.95 }}
+                        style={{ willChange: 'transform' }}
+                      >
+                        <skill.icon className={`${skill.color} text-3xl`} />
+                        <span className="text-gray-300 text-xs font-medium text-center">
+                          {skill.name}
+                        </span>
+                      </motion.div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
             </motion.div>
           </div>
 
@@ -288,12 +401,27 @@ const About = () => {
               whileHover={{ scale: 1.02, y: -5 }}
               style={{ willChange: 'transform' }}
             >
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">Experience</h3>
+              <div className="space-y-2">
+                <p className="text-white font-semibold text-lg">
+                  {experience.yearsOfExperience} Years
+                </p>
+                <p className="text-gray-400">Building Production Applications</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-xl border border-cyan-500/30 hover:border-cyan-500 hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-300"
+              whileHover={{ scale: 1.02, y: -5 }}
+              style={{ willChange: 'transform' }}
+            >
               <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">Education</h3>
               <div className="space-y-2">
                 <p className="text-white font-semibold text-lg">
-                  BSc. in Computing
+                  {experience.education.degree}
                 </p>
-                <p className="text-gray-400">University of Technology, Jamaica</p>
+                <p className="text-gray-400">{experience.education.institution}</p>
+                <p className="text-gray-500">{experience.education.status} {experience.education.year}</p>
               </div>
             </motion.div>
 
@@ -305,10 +433,10 @@ const About = () => {
               <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">Current Role</h3>
               <div className="space-y-2">
                 <p className="text-white font-semibold text-lg">
-                  Software Engineer
+                  {experience.current.title}
                 </p>
-                <p className="text-gray-400">Reuel's Web Services</p>
-                <p className="text-gray-500">2024 - Present</p>
+                <p className="text-gray-400">{experience.current.company}</p>
+                <p className="text-gray-500">{experience.current.period}</p>
               </div>
             </motion.div>
           </motion.div>

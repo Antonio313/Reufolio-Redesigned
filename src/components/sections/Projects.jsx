@@ -1,60 +1,13 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { FiGithub, FiExternalLink } from 'react-icons/fi';
+import { FiGithub, FiExternalLink, FiCheckCircle } from 'react-icons/fi';
+import { projects } from '../../data';
 
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const prefersReducedMotion = useReducedMotion();
-
-  const projects = [
-    {
-      title: 'Reufolio - Digital Portfolio (initial release)',
-      description:
-        'A modern, responsive portfolio website showcasing my software engineering projects and skills. Features include smooth animations, contact form with email integration, and resume download functionality. Built with performance and user experience in mind.',
-      tech: ['React', 'Node.js', 'MongoDB', 'Framer Motion', 'Tailwind CSS', 'EmailJS'],
-      github: 'https://github.com/Antonio313',
-      live: 'https://reufolio.online',
-      featured: true,
-    },
-    {
-      title: 'Pongs Shipping - Freight Management System',
-      description:
-        'A comprehensive full-stack web application for a freight forwarding company that streamlines package management from the US to Jamaica. Implemented real-time tracking, automated email notifications, and cloud storage solutions. The platform improved operational efficiency by 80% through seamless CI/CD deployment and AWS integration.',
-      tech: ['React', 'Node.js', 'PostgreSQL', 'AWS S3', 'SendGrid', 'Railway'],
-      github: '',
-      live: 'https://pongsshipping.com',
-      featured: true,
-    },
-    {
-      title: 'ByteGrade - AI Code Grading System',
-      description:
-        'Led frontend development for an automated grading platform that evaluates code submissions in C, C++, Python, and Java. The system provides instant feedback to students and allows lecturers to manage assignments efficiently. Designed with a focus on responsive design and intuitive user interface, making code evaluation accessible and efficient.',
-      tech: ['React', 'MongoDB', 'AWS', 'RESTful API', 'Material-UI'],
-      github: '',
-      live: 'https://bytegrade.online',
-      featured: true,
-    },
-    {
-      title: 'Academic Ticketing System',
-      description:
-        'Developed an internal ticketing system to facilitate communication between students, academic advisors, and supervisors regarding university and curriculum-related issues. The system includes role-based access control, real-time notifications, and comprehensive reporting features to track and resolve student concerns efficiently.',
-      tech: ['Java', 'MySQL', 'JavaFX', 'JDBC'],
-      github: '',
-      live: '',
-      featured: false,
-    },
-    {
-      title: 'Auto Parts POS System',
-      description:
-        'Designed and implemented a comprehensive Point of Sale system for an auto parts retailer using JavaFX. Features include inventory management, sales tracking, customer management, and detailed reporting capabilities. The system streamlined retail operations and improved transaction processing speed.',
-      tech: ['JavaFX', 'MySQL', 'Java', 'Scene Builder'],
-      github: '',
-      live: '',
-      featured: false,
-    },
-  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -213,43 +166,61 @@ const Projects = () => {
                   style={{ willChange: 'transform' }}
                 >
                   <div className="p-8">
-                    {/* Project Header */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
+                    {/* Project Header with Badges */}
+                    <div className="mb-4">
+                      <div className="flex flex-wrap items-start gap-2 mb-3">
                         {project.featured && (
-                          <span className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-400 text-sm font-semibold rounded-full mb-3">
+                          <span className="px-3 py-1 bg-cyan-500/20 text-cyan-400 text-sm font-semibold rounded-full">
                             Featured
                           </span>
                         )}
+                        {project.status === 'wip' && (
+                          <span className="px-3 py-1 bg-amber-500/20 text-amber-400 text-sm font-semibold rounded-full">
+                            Work in Progress
+                          </span>
+                        )}
+                        {project.status === 'live' && (
+                          <span className="px-3 py-1 bg-green-500/20 text-green-400 text-sm font-semibold rounded-full">
+                            Live
+                          </span>
+                        )}
+                        {project.role && (
+                          <span className="px-3 py-1 bg-purple-500/20 text-purple-400 text-sm font-semibold rounded-full">
+                            {project.role}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex items-start justify-between">
                         <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
                           {project.title}
                         </h3>
-                      </div>
-                      <div className="flex gap-4">
-                        {project.github && (
-                          <motion.a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-                            whileHover={{ scale: 1.1, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <FiGithub size={24} />
-                          </motion.a>
-                        )}
-                        {project.live && (
-                          <motion.a
-                            href={project.live}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-                            whileHover={{ scale: 1.1, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <FiExternalLink size={24} />
-                          </motion.a>
-                        )}
+                        <div className="flex gap-4">
+                          {project.github && (
+                            <motion.a
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+                              whileHover={{ scale: 1.1, y: -2 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <FiGithub size={24} />
+                            </motion.a>
+                          )}
+                          {project.live && (
+                            <motion.a
+                              href={project.live}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+                              whileHover={{ scale: 1.1, y: -2 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <FiExternalLink size={24} />
+                            </motion.a>
+                          )}
+                        </div>
                       </div>
                     </div>
 
@@ -258,16 +229,68 @@ const Projects = () => {
                       {project.description}
                     </p>
 
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-4 py-2 bg-gray-900/50 text-cyan-400 rounded-lg text-sm font-mono border border-gray-700"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                    {/* Impact Metrics */}
+                    {project.metrics && project.metrics.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {project.metrics.map((metric) => (
+                          <div
+                            key={metric}
+                            className="flex items-center gap-2 px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-lg text-sm text-purple-300"
+                          >
+                            <FiCheckCircle className="text-purple-400" />
+                            <span>{metric}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Tech Stack - Categorized */}
+                    <div className="space-y-3">
+                      {project.tech.frontend && project.tech.frontend.length > 0 && (
+                        <div>
+                          <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">Frontend</p>
+                          <div className="flex flex-wrap gap-2">
+                            {project.tech.frontend.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-4 py-2 bg-cyan-900/50 text-cyan-400 rounded-lg text-sm font-mono border border-cyan-700/50"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {project.tech.backend && project.tech.backend.length > 0 && (
+                        <div>
+                          <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">Backend</p>
+                          <div className="flex flex-wrap gap-2">
+                            {project.tech.backend.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-4 py-2 bg-blue-900/50 text-blue-400 rounded-lg text-sm font-mono border border-blue-700/50"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {project.tech.devops && project.tech.devops.length > 0 && (
+                        <div>
+                          <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">DevOps</p>
+                          <div className="flex flex-wrap gap-2">
+                            {project.tech.devops.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-4 py-2 bg-purple-900/50 text-purple-400 rounded-lg text-sm font-mono border border-purple-700/50"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 

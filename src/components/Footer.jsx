@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { FiGithub, FiLinkedin, FiMail, FiHeart } from 'react-icons/fi';
+import { personalInfo } from '../data';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -8,17 +9,17 @@ const Footer = () => {
     {
       name: 'GitHub',
       icon: FiGithub,
-      url: 'https://github.com/Antonio313',
+      url: personalInfo.social.github,
     },
     {
       name: 'LinkedIn',
       icon: FiLinkedin,
-      url: 'https://linkedin.com/in/reuel-richards-876b221aa/',
+      url: personalInfo.social.linkedin,
     },
     {
       name: 'Email',
       icon: FiMail,
-      url: 'mailto:reuelrichards1@gmail.com',
+      url: personalInfo.social.email,
     },
   ];
 
@@ -164,7 +165,7 @@ const Footer = () => {
         >
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              © {currentYear} Reuel Richards. All rights reserved.
+              © {currentYear} {personalInfo.name} • {personalInfo.location} • All rights reserved.
             </p>
             <p className="text-gray-400 text-sm flex items-center gap-2">
               Built with <motion.span
