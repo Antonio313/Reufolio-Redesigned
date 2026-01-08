@@ -167,14 +167,6 @@ const Footer = () => {
             <p className="text-gray-400 text-sm">
               © {currentYear} {personalInfo.name} • {personalInfo.location} • All rights reserved.
             </p>
-            <p className="text-gray-400 text-sm flex items-center gap-2">
-              Built with <motion.span
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1, repeat: Infinity }}
-              >
-                <FiHeart className="text-red-500" />
-              </motion.span> using React & Tailwind CSS
-            </p>
           </div>
         </motion.div>
       </div>
