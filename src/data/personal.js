@@ -11,7 +11,8 @@ export const personalInfo = {
     linkedin: "https://linkedin.com/in/reuel-richards-876b221aa/",
     email: "mailto:reuelrichards1@gmail.com"
   },
-  resumePath: "/resume.pdf"
+  resumePath: "/resume.pdf",
+  introVideoUrl: "https://www.youtube-nocookie.com/embed/Aq5WXmQQooo"
 };
 
 export const experience = {

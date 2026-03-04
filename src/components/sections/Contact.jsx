@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { FiMail, FiUser, FiMessageSquare, FiSend, FiCheckCircle, FiPhone } from 'react-icons/fi';
+import { FiMail, FiUser, FiMessageSquare, FiSend, FiCheckCircle, FiPhone, FiCopy, FiCheck } from 'react-icons/fi';
 import emailjs from '@emailjs/browser';
 import { personalInfo } from '../../data';
 
@@ -14,6 +14,15 @@ const Contact = () => {
     email: '',
     message: '',
   });
+
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(personalInfo.email).then(() => {
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    });
+  };
 
   const [status, setStatus] = useState({
     loading: false,
@@ -113,17 +122,29 @@ const Contact = () => {
 
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+                  <div className="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
                     <FiMail className="text-cyan-400 text-xl" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-gray-400 text-sm">Email</p>
-                    <a
-                      href={`mailto:${personalInfo.email}`}
-                      className="text-white hover:text-cyan-400 transition-colors"
-                    >
-                      {personalInfo.email}
-                    </a>
+                    <div className="flex items-center gap-3">
+                      <a
+                        href={`mailto:${personalInfo.email}`}
+                        className="text-white hover:text-cyan-400 transition-colors truncate"
+                      >
+                        {personalInfo.email}
+                      </a>
+                      <motion.button
+                        onClick={handleCopyEmail}
+                        className="text-gray-500 hover:text-cyan-400 transition-colors flex-shrink-0"
+                        whileTap={{ scale: 0.85 }}
+                        title="Copy email address"
+                      >
+                        {emailCopied
+                          ? <FiCheck size={15} className="text-green-400" />
+                          : <FiCopy size={15} />}
+                      </motion.button>
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">

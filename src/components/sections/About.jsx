@@ -1,7 +1,30 @@
-import { motion, useReducedMotion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useReducedMotion, useInView } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
 import { experience, skills } from '../../data';
+
+const AnimatedCounter = ({ target, suffix = '', duration = 1500 }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!isInView) return;
+    let current = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, 16);
+    return () => clearInterval(timer);
+  }, [isInView, target, duration]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+};
 
 const About = () => {
   const ref = useRef(null);
@@ -35,91 +58,16 @@ const About = () => {
       ref={ref}
       className="min-h-screen py-20 bg-gray-900 flex items-center relative overflow-hidden"
     >
-      {/* Enhanced Background decorative elements - Simplified for mobile */}
+      {/* Static background — no JS animations, GPU-friendly */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Animated gradient orbs - Reduced on mobile */}
-        <motion.div
-          className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-full blur-3xl"
-          animate={prefersReducedMotion ? {} : {
-            scale: [1, 1.2, 1],
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{ willChange: 'transform' }}
+        <div className={`absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-full blur-3xl ${prefersReducedMotion ? '' : 'animate-pulse'}`} />
+        <div
+          className={`absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-tr from-purple-500/10 to-pink-500/10 rounded-full blur-3xl hidden md:block ${prefersReducedMotion ? '' : 'animate-pulse'}`}
+          style={{ animationDelay: '2s', animationDuration: '5s' }}
         />
-        <motion.div
-          className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-tr from-purple-500/10 to-pink-500/10 rounded-full blur-3xl hidden md:block"
-          animate={prefersReducedMotion ? {} : {
-            scale: [1.2, 1, 1.2],
-            x: [0, -30, 0],
-            y: [0, 20, 0],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{ willChange: 'transform' }}
-        />
-
-        {/* Animated code symbols - Hidden on mobile */}
-        <motion.div
-          className="absolute top-20 right-10 text-cyan-500/20 font-mono text-6xl transform hidden lg:block"
-          animate={prefersReducedMotion ? {} : {
-            rotate: [12, 20, 12],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{ willChange: 'transform' }}
-        >
-          {'</>'}
-        </motion.div>
-
-        {/* Floating geometric shapes - Hidden on mobile */}
-        <motion.div
-          className="absolute top-1/2 right-1/4 w-32 h-32 border-2 border-cyan-500/20 rounded-full hidden lg:block"
-          animate={prefersReducedMotion ? {} : {
-            y: [0, -30, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{ willChange: 'transform' }}
-        />
-
-        {/* Floating particles - Reduced count on mobile */}
-        {[...Array(prefersReducedMotion ? 0 : 3)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-cyan-400/30 rounded-full hidden md:block"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100, 0],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 5 + Math.random() * 5,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: 'easeInOut',
-            }}
-          />
-        ))}
+        {/* Static decorative elements */}
+        <div className="absolute top-20 right-10 text-cyan-500/15 font-mono text-6xl hidden lg:block select-none">{'</>'}</div>
+        <div className="absolute top-1/2 right-1/4 w-32 h-32 border border-cyan-500/10 rounded-full hidden lg:block" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -148,61 +96,62 @@ const About = () => {
               <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 via-purple-500 to-cyan-500 rounded-full"></div>
 
               <div className="space-y-6">
-                  <motion.p
-                      className="text-gray-300 text-lg leading-relaxed"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ duration: 0.4, delay: 0.2 }}
-                  >
-                      Full Stack Software Engineer with <span className="text-cyan-400 font-semibold">2+ years of professional experience</span> building scalable,
-                      production-ready applications. Specialized in React, Node.js, TypeScript, and cloud
-                      infrastructure (AWS, Railway). I deliver end-to-end solutions that drive measurable
-                      business impact.
-                  </motion.p>
-                  <motion.p
-                      className="text-gray-300 text-lg leading-relaxed"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ duration: 0.4, delay: 0.3 }}
-                  >
-                      As the founder of <span className="text-cyan-400 font-semibold">Reuel's Web Services</span>, I've architected and delivered complex systems
-                      ranging from freight management platforms to AI-powered educational tools. My approach
-                      emphasizes <span className="text-purple-400">clean, maintainable code</span>, comprehensive testing, and cross-functional
-                      collaboration. I thrive in Agile environments where I can own features from conception
-                      through deployment.
-                  </motion.p>
-                  <motion.p
-                    className="text-gray-300 text-lg leading-relaxed"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.4, delay: 0.4 }}
+                <motion.p
+                  className="text-gray-300 text-lg leading-relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.2 }}
                 >
-                    I'm a <span className="text-cyan-400 font-semibold">rapid learner</span> who adapts to new technologies quickly, whether mastering a new cloud
-                    platform or architecting systems from the ground up. My product-first mindset ensures
-                    solutions align with business goals while maintaining technical excellence.
+                  Full Stack Software Engineer with <span className="text-cyan-400 font-semibold">2+ years of professional experience</span> building scalable,
+                  production-ready applications. Specialized in React, Node.js, TypeScript, and cloud
+                  infrastructure (AWS, Railway). I deliver end-to-end solutions that drive measurable
+                  business impact.
                 </motion.p>
-                  <motion.p
-                      className="text-gray-300 text-lg leading-relaxed"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ duration: 0.4, delay: 0.5 }}
-                  >
-                      Currently completing my <span className="text-cyan-400 font-semibold">BSc in Computer Science</span> at the University of Technology, Jamaica
-                      (2025). Beyond coding, I'm deeply passionate about <span className="text-purple-400">basketball</span> – whether playing competitively or watching
-                      the NBA. Music is another cornerstone of my life; I play multiple instruments including <span className="text-purple-400">guitar, piano, and drums</span>,
-                      and I'm always exploring new genres and techniques. I also enjoy <span className="text-purple-400">gaming</span> as a way to unwind and connect with friends,
-                      particularly strategy and RPG titles. These creative pursuits fuel my problem-solving abilities and keep me balanced.
-                  </motion.p>
-                  <motion.p
-                      className="text-gray-300 text-lg leading-relaxed"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ duration: 0.4, delay: 0.6 }}
-                  >
-                      I believe in <span className="text-cyan-400 font-semibold">continuous growth</span> – both professionally and personally. Whether it's learning
-                      a new programming language, mastering a new song, or improving my basketball skills, I approach every challenge with curiosity
-                      and determination. Fluent in <span className="text-purple-400">English</span> with basic <span className="text-purple-400">Spanish</span> proficiency.
-                  </motion.p>
+                <motion.p
+                  className="text-gray-300 text-lg leading-relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.3 }}
+                >
+                  As the founder of <span className="text-cyan-400 font-semibold">Reuel's Web Services</span>, I architect and deliver complex systems
+                  ranging from freight management platforms to AI-powered educational tools. A <span className="text-cyan-400 font-semibold">BSc in Computer Science</span> graduate
+                  from the University of Technology, Jamaica (2025), I bring both academic rigour and real-world
+                  engineering experience to every project. My approach emphasizes <span className="text-purple-400">clean, maintainable code</span>, comprehensive
+                  testing, and cross-functional collaboration.
+                </motion.p>
+                <motion.p
+                  className="text-gray-300 text-lg leading-relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.4 }}
+                >
+                  I'm a <span className="text-cyan-400 font-semibold">rapid learner</span> who adapts to new technologies quickly — whether mastering a new cloud
+                  platform, integrating AI capabilities, or architecting systems from the ground up. I thrive in
+                  Agile environments where I can own features from conception through deployment, and I'm actively
+                  seeking opportunities at forward-thinking companies where I can contribute at scale.
+                </motion.p>
+                <motion.p
+                  className="text-gray-300 text-lg leading-relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.5 }}
+                >
+                  Beyond the keyboard, I'm deeply passionate about <span className="text-purple-400">basketball</span> — whether playing competitively or
+                  following the NBA. Music is another cornerstone of my life; I play <span className="text-purple-400">guitar, piano, and drums</span> and
+                  I'm always exploring new genres and techniques. I also enjoy <span className="text-purple-400">gaming</span> as a way to unwind and connect
+                  with friends, particularly strategy and RPG titles. These creative pursuits sharpen my problem-solving
+                  instincts and keep me grounded.
+                </motion.p>
+                <motion.p
+                  className="text-gray-300 text-lg leading-relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.6 }}
+                >
+                  I believe in <span className="text-cyan-400 font-semibold">continuous growth</span> — professionally and personally. Whether it's picking up a new
+                  framework, mastering a new song, or levelling up my game, I approach every challenge with curiosity
+                  and determination. Fluent in <span className="text-purple-400">English</span> with basic <span className="text-purple-400">Spanish</span> proficiency.
+                </motion.p>
               </div>
           </motion.div>
 
@@ -239,7 +188,6 @@ const About = () => {
                         className="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border border-gray-700 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col items-center justify-center gap-2 cursor-pointer"
                         whileHover={{ scale: 1.05, y: -5 }}
                         whileTap={{ scale: 0.95 }}
-                        style={{ willChange: 'transform' }}
                       >
                         <skill.icon className={`${skill.color} text-3xl`} />
                         <span className="text-gray-300 text-xs font-medium text-center">
@@ -273,7 +221,6 @@ const About = () => {
                         className="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border border-gray-700 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col items-center justify-center gap-2 cursor-pointer"
                         whileHover={{ scale: 1.05, y: -5 }}
                         whileTap={{ scale: 0.95 }}
-                        style={{ willChange: 'transform' }}
                       >
                         <skill.icon className={`${skill.color} text-3xl`} />
                         <span className="text-gray-300 text-xs font-medium text-center">
@@ -307,7 +254,6 @@ const About = () => {
                         className="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border border-gray-700 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col items-center justify-center gap-2 cursor-pointer"
                         whileHover={{ scale: 1.05, y: -5 }}
                         whileTap={{ scale: 0.95 }}
-                        style={{ willChange: 'transform' }}
                       >
                         <skill.icon className={`${skill.color} text-3xl`} />
                         <span className="text-gray-300 text-xs font-medium text-center">
@@ -341,7 +287,6 @@ const About = () => {
                         className="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border border-gray-700 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col items-center justify-center gap-2 cursor-pointer"
                         whileHover={{ scale: 1.05, y: -5 }}
                         whileTap={{ scale: 0.95 }}
-                        style={{ willChange: 'transform' }}
                       >
                         <skill.icon className={`${skill.color} text-3xl`} />
                         <span className="text-gray-300 text-xs font-medium text-center">
@@ -353,39 +298,6 @@ const About = () => {
                 </motion.div>
               </div>
 
-              {/* Professional Practices */}
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <h4 className="text-lg font-semibold text-gray-300">Professional Practices</h4>
-                  <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/30 to-transparent"></div>
-                </div>
-                <motion.div
-                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate={isInView ? 'visible' : 'hidden'}
-                >
-                  {skills.practices.map((skill) => (
-                    <motion.div
-                      key={skill.name}
-                      variants={itemVariants}
-                      className="group relative"
-                    >
-                      <motion.div
-                        className="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border border-gray-700 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex flex-col items-center justify-center gap-2 cursor-pointer"
-                        whileHover={{ scale: 1.05, y: -5 }}
-                        whileTap={{ scale: 0.95 }}
-                        style={{ willChange: 'transform' }}
-                      >
-                        <skill.icon className={`${skill.color} text-3xl`} />
-                        <span className="text-gray-300 text-xs font-medium text-center">
-                          {skill.name}
-                        </span>
-                      </motion.div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </div>
             </motion.div>
           </div>
 
@@ -399,12 +311,12 @@ const About = () => {
             <motion.div
               className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-xl border border-cyan-500/30 hover:border-cyan-500 hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-300"
               whileHover={{ scale: 1.02, y: -5 }}
-              style={{ willChange: 'transform' }}
             >
               <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">Experience</h3>
               <div className="space-y-2">
-                <p className="text-white font-semibold text-lg">
-                  {experience.yearsOfExperience} Years
+                <p className="text-white font-semibold text-3xl">
+                  <AnimatedCounter target={2} suffix="+" />
+                  <span className="text-lg ml-1">Years</span>
                 </p>
                 <p className="text-gray-400">Building Production Applications</p>
               </div>
@@ -413,7 +325,19 @@ const About = () => {
             <motion.div
               className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-xl border border-cyan-500/30 hover:border-cyan-500 hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-300"
               whileHover={{ scale: 1.02, y: -5 }}
-              style={{ willChange: 'transform' }}
+            >
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">Projects</h3>
+              <div className="space-y-2">
+                <p className="text-white font-semibold text-3xl">
+                  <AnimatedCounter target={5} suffix="+" />
+                </p>
+                <p className="text-gray-400">Production Applications Shipped</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-xl border border-cyan-500/30 hover:border-cyan-500 hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-300"
+              whileHover={{ scale: 1.02, y: -5 }}
             >
               <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">Education</h3>
               <div className="space-y-2">
@@ -428,7 +352,6 @@ const About = () => {
             <motion.div
               className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-xl border border-cyan-500/30 hover:border-cyan-500 hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-300"
               whileHover={{ scale: 1.02, y: -5 }}
-              style={{ willChange: 'transform' }}
             >
               <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">Current Role</h3>
               <div className="space-y-2">

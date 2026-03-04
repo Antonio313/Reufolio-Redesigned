@@ -1,14 +1,19 @@
 import { motion, useReducedMotion } from 'framer-motion';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FiGithub, FiLinkedin, FiMail, FiArrowDown } from 'react-icons/fi';
 import { personalInfo } from '../../data';
 
 const Hero = () => {
   const prefersReducedMotion = useReducedMotion();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname === '/') {
+      const element = document.getElementById(sectionId);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate(`/#${sectionId}`);
     }
   };
 
@@ -17,71 +22,25 @@ const Hero = () => {
       id="home"
       className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
     >
-      {/* Animated background elements - Simplified for mobile */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f12_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f12_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+      {/* Static background — no JS animations, GPU-friendly */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f12_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f12_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 
-        {/* Animated gradient orbs - Reduced on mobile */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"
-          animate={prefersReducedMotion ? {} : {
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{ willChange: 'transform' }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl hidden md:block"
-          animate={prefersReducedMotion ? {} : {
-            scale: [1.2, 1, 1.2],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{ willChange: 'transform' }}
+        {/* Orbs — static blur, CSS pulse only (compositor-thread, no JS) */}
+        <div className={`absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl ${prefersReducedMotion ? '' : 'animate-pulse'}`} />
+        <div className={`absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl hidden md:block ${prefersReducedMotion ? '' : 'animate-pulse'}`}
+          style={{ animationDelay: '1s', animationDuration: '4s' }}
         />
 
-        {/* Floating geometric shapes - Hidden on mobile */}
-        <motion.div
-          className="absolute top-20 right-20 w-16 h-16 border-2 border-cyan-500/30 rounded-lg hidden lg:block"
-          animate={prefersReducedMotion ? {} : {
-            y: [0, -20, 0],
-            rotate: [0, 90, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{ willChange: 'transform' }}
-        />
-        <motion.div
-          className="absolute bottom-1/3 right-1/4 w-10 h-10 border-2 border-blue-500/30 rounded-full hidden lg:block"
-          animate={prefersReducedMotion ? {} : {
-            scale: [1, 1.3, 1],
-            opacity: [0.4, 0.7, 0.4],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{ willChange: 'transform' }}
-        />
+        {/* Geometric shapes — static, no animation */}
+        <div className="absolute top-20 right-20 w-16 h-16 border-2 border-cyan-500/20 rounded-lg hidden lg:block" />
+        <div className="absolute bottom-1/3 right-1/4 w-10 h-10 border-2 border-blue-500/20 rounded-full hidden lg:block" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center">
-          {/* Name and Title */}
+          {/* Name and Title — entrance animations run once and stop */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -132,7 +91,7 @@ const Hero = () => {
           >
             <motion.button
               onClick={() => scrollToSection('projects')}
-              className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg font-semibold text-lg shadow-lg shadow-cyan-500/50 hover:shadow-cyan-500/70 transition-all duration-300"
+              className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg font-semibold text-lg shadow-lg shadow-cyan-500/50 hover:shadow-cyan-500/70 transition-shadow duration-300"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -140,7 +99,7 @@ const Hero = () => {
             </motion.button>
             <motion.button
               onClick={() => scrollToSection('contact')}
-              className="px-8 py-4 border-2 border-cyan-500 text-cyan-400 rounded-lg font-semibold text-lg hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300"
+              className="px-8 py-4 border-2 border-cyan-500 text-cyan-400 rounded-lg font-semibold text-lg hover:bg-cyan-500/10 transition-colors duration-300"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -155,42 +114,32 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <motion.a
-              href={personalInfo.social.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-              whileHover={{ y: -5 }}
-            >
-              <FiGithub size={32} />
-            </motion.a>
-            <motion.a
-              href={personalInfo.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-              whileHover={{ y: -5 }}
-            >
-              <FiLinkedin size={32} />
-            </motion.a>
-            <motion.a
-              href={personalInfo.social.email}
-              className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-              whileHover={{ y: -5 }}
-            >
-              <FiMail size={32} />
-            </motion.a>
+            {[
+              { href: personalInfo.social.github, icon: FiGithub },
+              { href: personalInfo.social.linkedin, icon: FiLinkedin },
+              { href: personalInfo.social.email, icon: FiMail },
+            ].map(({ href, icon: Icon }) => (
+              <motion.a
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+                whileHover={{ y: -5 }}
+              >
+                <Icon size={32} />
+              </motion.a>
+            ))}
           </motion.div>
 
-          {/* Scroll Indicator */}
-          <motion.div
-            className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
-            animate={prefersReducedMotion ? {} : { y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
+          {/* Scroll indicator — CSS bounce, zero JS overhead */}
+          <button
+            className={`absolute bottom-4 left-1/2 -translate-x-1/2 text-cyan-400 ${prefersReducedMotion ? '' : 'animate-bounce'}`}
             onClick={() => scrollToSection('about')}
+            aria-label="Scroll to about section"
           >
-            <FiArrowDown className="text-cyan-400" size={32} />
-          </motion.div>
+            <FiArrowDown size={32} />
+          </button>
         </div>
       </div>
     </section>
