@@ -52,7 +52,7 @@ const ProjectDetail = () => {
   }
 
   const status = statusConfig[project.status] || statusConfig.shelved;
-  const hasCaseStudy = project.problem || project.solution || project.impact;
+  const hasBlogContent = project.blogContent?.length > 0;
   const hasImages = project.images && project.images.length > 0;
 
   return (
@@ -200,38 +200,16 @@ const ProjectDetail = () => {
           </motion.section>
         )}
 
-        {/* ── Case Study ── */}
-        {hasCaseStudy && (
+        {/* ── More About ── */}
+        {hasBlogContent && (
           <motion.section className="mb-14" {...fadeUp(0.2)}>
-            <h2 className="text-2xl font-bold text-white mb-6">Case Study</h2>
-            <div className="grid md:grid-cols-3 gap-5">
-              {project.problem && (
-                <div className="bg-gray-800/60 border border-red-500/20 rounded-xl p-6 backdrop-blur-sm">
-                  <div className="flex items-center gap-2.5 mb-4">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-400 flex-shrink-0" />
-                    <h3 className="text-base font-bold text-red-400 uppercase tracking-wide">Problem</h3>
-                  </div>
-                  <p className="text-gray-300 leading-relaxed text-sm">{project.problem}</p>
-                </div>
-              )}
-              {project.solution && (
-                <div className="bg-gray-800/60 border border-cyan-500/20 rounded-xl p-6 backdrop-blur-sm">
-                  <div className="flex items-center gap-2.5 mb-4">
-                    <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 flex-shrink-0" />
-                    <h3 className="text-base font-bold text-cyan-400 uppercase tracking-wide">Solution</h3>
-                  </div>
-                  <p className="text-gray-300 leading-relaxed text-sm">{project.solution}</p>
-                </div>
-              )}
-              {project.impact && (
-                <div className="bg-gray-800/60 border border-green-500/20 rounded-xl p-6 backdrop-blur-sm">
-                  <div className="flex items-center gap-2.5 mb-4">
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-400 flex-shrink-0" />
-                    <h3 className="text-base font-bold text-green-400 uppercase tracking-wide">Impact</h3>
-                  </div>
-                  <p className="text-gray-300 leading-relaxed text-sm">{project.impact}</p>
-                </div>
-              )}
+            <h2 className="text-2xl font-bold text-white mb-6">More About {project.title}</h2>
+            <div className="space-y-5">
+              {project.blogContent.map((paragraph, i) => (
+                <p key={i} className="text-gray-300 leading-relaxed text-base md:text-lg">
+                  {paragraph}
+                </p>
+              ))}
             </div>
           </motion.section>
         )}
@@ -279,23 +257,6 @@ const ProjectDetail = () => {
           </div>
         </motion.section>
 
-        {/* ── Key Results ── */}
-        {project.metrics?.length > 0 && (
-          <motion.section className="mb-14" {...fadeUp(0.3)}>
-            <h2 className="text-2xl font-bold text-white mb-5">Key Results</h2>
-            <div className="flex flex-wrap gap-3">
-              {project.metrics.map((metric) => (
-                <div
-                  key={metric}
-                  className="flex items-center gap-2.5 px-4 py-2.5 bg-purple-500/10 border border-purple-500/20 rounded-lg text-purple-300"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />
-                  <span className="text-sm font-medium">{metric}</span>
-                </div>
-              ))}
-            </div>
-          </motion.section>
-        )}
 
         {/* Bottom back button */}
         <motion.button
