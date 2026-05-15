@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { personalInfo } from '../data';
 
 const IntroVideo = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (!personalInfo.introVideoUrl) return;
     const shown = sessionStorage.getItem('reufolio_intro_shown');
     if (!shown) {
       setIsVisible(true);
@@ -17,8 +15,6 @@ const IntroVideo = () => {
     sessionStorage.setItem('reufolio_intro_shown', 'true');
     setIsVisible(false);
   };
-
-  if (!personalInfo.introVideoUrl) return null;
 
   return (
     <AnimatePresence>
@@ -47,23 +43,20 @@ const IntroVideo = () => {
               <img src="/logo.svg" alt="Reufolio" className="h-8 w-8" />
               <span className="text-white font-bold text-xl tracking-wide">Reufolio</span>
             </div>
-            <p className="text-gray-400 text-sm">Welcome to my Portfolio. Here's a video introduction.</p>
+            <p className="text-gray-400 text-sm">Welcome to my Portfolio.</p>
           </motion.div>
 
-          {/* YouTube iframe */}
+          {/* Coming soon placeholder */}
           <motion.div
-            className="w-full max-w-4xl aspect-video rounded-xl overflow-hidden shadow-2xl shadow-cyan-500/20 border border-white/10"
+            className="w-full max-w-4xl aspect-video rounded-xl overflow-hidden shadow-2xl shadow-cyan-500/20 border border-white/10 bg-gray-800 flex flex-col items-center justify-center gap-3"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <iframe
-              src={`${personalInfo.introVideoUrl}?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1`}
-              className="w-full h-full"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-              title="Portfolio Introduction"
-            />
+            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              Coming Soon
+            </span>
+            <p className="text-gray-500 text-sm">Video introduction in progress</p>
           </motion.div>
 
           {/* Skip button — appears after 1.5s */}

@@ -12,7 +12,7 @@ export const personalInfo = {
     email: "mailto:reuelrichards1@gmail.com"
   },
   resumePath: "/resume.pdf",
-  introVideoUrl: "https://www.youtube-nocookie.com/embed/Aq5WXmQQooo"
+  introVideoUrl: ""
 };
 
 export const experience = {
