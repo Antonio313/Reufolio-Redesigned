@@ -70,7 +70,7 @@ const Lightbox = ({ images, initialIndex = 0, onClose }) => {
         {images.length > 1 && (
           <button
             onClick={goPrev}
-            className="absolute left-2 text-white/60 hover:text-cyan-400 p-2 z-10 transition-colors"
+            className="absolute left-2 text-white/60 hover:text-accent-cyan p-2 z-10 transition-colors"
             aria-label="Previous image"
           >
             <FiChevronLeft size={40} />
@@ -106,7 +106,7 @@ const Lightbox = ({ images, initialIndex = 0, onClose }) => {
         {images.length > 1 && (
           <button
             onClick={goNext}
-            className="absolute right-2 text-white/60 hover:text-cyan-400 p-2 z-10 transition-colors"
+            className="absolute right-2 text-white/60 hover:text-accent-cyan p-2 z-10 transition-colors"
             aria-label="Next image"
           >
             <FiChevronRight size={40} />
@@ -129,7 +129,7 @@ const Lightbox = ({ images, initialIndex = 0, onClose }) => {
               }}
               className={`flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 transition-all duration-200 ${
                 idx === currentIndex
-                  ? 'border-cyan-400 opacity-100'
+                  ? 'border-accent-cyan opacity-100'
                   : 'border-transparent opacity-40 hover:opacity-70'
               }`}
               aria-label={`View image ${idx + 1}`}

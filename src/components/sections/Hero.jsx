@@ -1,17 +1,36 @@
+import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FiGithub, FiLinkedin, FiMail, FiArrowDown } from 'react-icons/fi';
 import { personalInfo } from '../../data';
+import { scrollToSection } from '../../utils/scrollTo';
+import EditorWindow from '../EditorWindow';
 
 const Hero = () => {
   const prefersReducedMotion = useReducedMotion();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const scrollToSection = (sectionId) => {
+  const [typedLength, setTypedLength] = useState(
+    prefersReducedMotion ? personalInfo.tagline.length : 0
+  );
+
+  useEffect(() => {
+    if (prefersReducedMotion) return undefined;
+    let count = 0;
+    const interval = setInterval(() => {
+      count += 1;
+      setTypedLength(count);
+      if (count >= personalInfo.tagline.length) clearInterval(interval);
+    }, 12);
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion]);
+
+  const isTyping = typedLength < personalInfo.tagline.length;
+
+  const goToSection = (sectionId) => {
     if (location.pathname === '/') {
-      const element = document.getElementById(sectionId);
-      if (element) element.scrollIntoView({ behavior: 'smooth' });
+      scrollToSection(sectionId);
     } else {
       navigate(`/#${sectionId}`);
     }
@@ -20,127 +39,135 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-canvas py-28 md:py-20"
     >
-      {/* Static background — no JS animations, GPU-friendly */}
+      {/* Static background — dot grid + one static glow, no animate-pulse (perf-friendly) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f12_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f12_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-
-        {/* Orbs — static blur, CSS pulse only (compositor-thread, no JS) */}
-        <div className={`absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl ${prefersReducedMotion ? '' : 'animate-pulse'}`} />
-        <div className={`absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl hidden md:block ${prefersReducedMotion ? '' : 'animate-pulse'}`}
-          style={{ animationDelay: '1s', animationDuration: '4s' }}
-        />
-
-        {/* Geometric shapes — static, no animation */}
-        <div className="absolute top-20 right-20 w-16 h-16 border-2 border-cyan-500/20 rounded-lg hidden lg:block" />
-        <div className="absolute bottom-1/3 right-1/4 w-10 h-10 border-2 border-blue-500/20 rounded-full hidden lg:block" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle,rgb(var(--color-border)/0.6)_1px,transparent_1px)] bg-[size:28px_28px]" />
+        <div className="absolute -top-40 -right-40 w-[32rem] h-[32rem] rounded-full bg-accent-cyan/10 blur-3xl" />
+        <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-accent-purple/5 blur-3xl hidden md:block" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center">
-          {/* Name and Title — entrance animations run once and stop */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.h2
-              className="text-cyan-400 text-lg sm:text-xl md:text-2xl font-mono mb-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-            >
-              Hi, my name is
-            </motion.h2>
-            <motion.h1
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 bg-gradient-to-r from-white via-cyan-100 to-white bg-clip-text text-transparent"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              {personalInfo.name}
-            </motion.h1>
-            <motion.h2
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-gray-400 via-cyan-300 to-gray-400 bg-clip-text text-transparent"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              {personalInfo.title}
-            </motion.h2>
-          </motion.div>
-
-          {/* Description */}
-          <motion.p
-            className="text-gray-300 text-lg sm:text-xl md:text-2xl max-w-3xl mx-auto mb-8 leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            {personalInfo.tagline}
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <motion.button
-              onClick={() => scrollToSection('projects')}
-              className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg font-semibold text-lg shadow-lg shadow-cyan-500/50 hover:shadow-cyan-500/70 transition-shadow duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              View My Work
-            </motion.button>
-            <motion.button
-              onClick={() => scrollToSection('contact')}
-              className="px-8 py-4 border-2 border-cyan-500 text-cyan-400 rounded-lg font-semibold text-lg hover:bg-cyan-500/10 transition-colors duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Get In Touch
-            </motion.button>
-          </motion.div>
-
-          {/* Social Links */}
-          <motion.div
-            className="flex gap-6 justify-center mb-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <motion.div
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+        <EditorWindow activeId="home">
+          {/* Code body */}
+          <div className="grid grid-cols-[auto_1fr] gap-x-4 px-4 sm:px-8 py-8 sm:py-10 font-mono text-sm sm:text-base leading-relaxed">
             {[
-              { href: personalInfo.social.github, icon: FiGithub },
-              { href: personalInfo.social.linkedin, icon: FiLinkedin },
-              { href: personalInfo.social.email, icon: FiMail },
-            ].map(({ href, icon: Icon }) => (
+              <><span className="text-accent-purple">const</span> <span className="text-text-primary">developer</span> <span className="text-text-secondary">= {'{'}</span></>,
+              <>
+                <span className="text-text-secondary">name:</span>{' '}
+                <span className="text-accent-green">'{personalInfo.name}'</span>
+                <span className="text-text-secondary">,</span>
+              </>,
+              <>
+                <span className="text-text-secondary">role:</span>{' '}
+                <span className="text-accent-green">'{personalInfo.title}'</span>
+                <span className="text-text-secondary">,</span>
+              </>,
+              <>
+                <span className="text-text-secondary">location:</span>{' '}
+                <span className="text-accent-green">'{personalInfo.location}'</span>
+                <span className="text-text-secondary">,</span>
+              </>,
+              <>
+                <span className="text-text-secondary">status:</span>{' '}
+                <span className="text-accent-green">'available_for_hire'</span>
+                <span className="text-text-secondary">,</span>{' '}
+                <span className="inline-flex items-center gap-1.5 align-middle">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse" />
+                  <span className="text-text-secondary text-xs italic">// open to work</span>
+                </span>
+              </>,
+              <span className="text-text-secondary">
+                {'}'}
+                <span className="cursor-blink inline-block w-2 h-4 sm:h-5 bg-accent-cyan ml-1 align-middle" />
+              </span>,
+            ].map((line, index) => (
+              <div key={index} className="contents">
+                <span className="text-text-secondary/40 text-right select-none text-xs sm:text-sm pt-0.5">
+                  {index + 1}
+                </span>
+                <div className={index > 0 && index < 5 ? 'pl-4' : ''}>{line}</div>
+              </div>
+            ))}
+
+            {/* Blank line + typed tagline as a comment block */}
+            <span className="text-text-secondary/40 text-right select-none text-xs sm:text-sm pt-0.5">
+              {' '}
+            </span>
+            <div />
+            <span className="text-text-secondary/40 text-right select-none text-xs sm:text-sm pt-0.5">7</span>
+            <div className="text-text-secondary italic text-xs sm:text-sm leading-relaxed">
+              {'/** '}
+              {personalInfo.tagline.slice(0, typedLength)}
+              {isTyping && <span className="cursor-blink inline-block w-1.5 h-3 bg-text-secondary ml-0.5 align-middle" />}
+              {!isTyping && ' */'}
+            </div>
+          </div>
+        </EditorWindow>
+        </motion.div>
+
+        {/* CTA + Social */}
+        <motion.div
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center justify-between gap-6 mt-8"
+        >
+          <div className="flex flex-col sm:flex-row gap-3 font-mono text-sm w-full sm:w-auto">
+            <motion.button
+              onClick={() => goToSection('projects')}
+              className="px-6 py-3 rounded-md bg-accent-cyan text-canvas font-semibold hover:bg-accent-cyan/90 transition-colors duration-200"
+              whileHover={prefersReducedMotion ? {} : { y: -2 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              $ view --projects
+            </motion.button>
+            <motion.button
+              onClick={() => goToSection('contact')}
+              className="px-6 py-3 rounded-md border border-border text-text-primary hover:border-accent-cyan hover:text-accent-cyan transition-colors duration-200"
+              whileHover={prefersReducedMotion ? {} : { y: -2 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              $ contact --me
+            </motion.button>
+          </div>
+
+          <div className="flex gap-3">
+            {[
+              { href: personalInfo.social.github, icon: FiGithub, label: 'GitHub' },
+              { href: personalInfo.social.linkedin, icon: FiLinkedin, label: 'LinkedIn' },
+              { href: personalInfo.social.email, icon: FiMail, label: 'Email' },
+            ].map(({ href, icon: Icon, label }) => (
               <motion.a
-                key={href}
+                key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-                whileHover={{ y: -5 }}
+                aria-label={label}
+                className="w-11 h-11 flex items-center justify-center rounded-md border border-border text-text-secondary hover:text-accent-cyan hover:border-accent-cyan/50 transition-colors duration-200"
+                whileHover={prefersReducedMotion ? {} : { y: -3 }}
               >
-                <Icon size={32} />
+                <Icon size={18} />
               </motion.a>
             ))}
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {/* Scroll indicator — CSS bounce, zero JS overhead */}
-          <button
-            className={`absolute bottom-4 left-1/2 -translate-x-1/2 text-cyan-400 ${prefersReducedMotion ? '' : 'animate-bounce'}`}
-            onClick={() => scrollToSection('about')}
-            aria-label="Scroll to about section"
-          >
-            <FiArrowDown size={32} />
-          </button>
-        </div>
+        {/* Scroll indicator — CSS bounce only, zero JS overhead */}
+        <button
+          className="hidden sm:flex flex-col items-center gap-1 mx-auto mt-14 text-text-secondary hover:text-accent-cyan transition-colors duration-200"
+          onClick={() => goToSection('about')}
+          aria-label="Scroll to about section"
+        >
+          <span className="font-mono text-xs">scroll</span>
+          <FiArrowDown size={18} className={prefersReducedMotion ? '' : 'animate-bounce'} />
+        </button>
       </div>
     </section>
   );

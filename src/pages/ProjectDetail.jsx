@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowLeft, FiExternalLink, FiGithub } from 'react-icons/fi';
@@ -9,10 +9,10 @@ import Lightbox from '../components/Lightbox';
 import ScrollProgress from '../components/ScrollProgress';
 
 const statusConfig = {
-  live: { label: 'Live', classes: 'bg-green-500/20 text-green-400 border border-green-500/30' },
-  wip: { label: 'Work in Progress', classes: 'bg-amber-500/20 text-amber-400 border border-amber-500/30' },
-  academic: { label: 'Capstone Project', classes: 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' },
-  shelved: { label: 'Shelved', classes: 'bg-gray-500/20 text-gray-400 border border-gray-500/30' },
+  live: { label: 'Live', classes: 'bg-accent-green/10 text-accent-green border border-accent-green/30' },
+  wip: { label: 'Work in Progress', classes: 'bg-accent-amber/10 text-accent-amber border border-accent-amber/30' },
+  academic: { label: 'Capstone Project', classes: 'bg-accent-purple/10 text-accent-purple border border-accent-purple/30' },
+  shelved: { label: 'Shelved', classes: 'bg-surface-raised text-text-secondary border border-border' },
 };
 
 const fadeUp = (delay = 0) => ({
@@ -30,19 +30,15 @@ const ProjectDetail = () => {
 
   const project = projects.find((p) => p.id === projectId);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [projectId]);
-
   if (!project) {
     return (
-      <div className="bg-gray-900 min-h-screen flex items-center justify-center">
+      <div className="bg-canvas min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <p className="text-6xl font-bold text-gray-700 mb-4">404</p>
-          <h1 className="text-2xl font-bold text-white mb-6">Project not found</h1>
+          <p className="font-mono text-6xl font-bold text-border mb-4">404</p>
+          <h1 className="text-2xl font-bold text-text-primary mb-6">Project not found</h1>
           <button
             onClick={() => navigate('/')}
-            className="text-cyan-400 hover:text-cyan-300 underline transition-colors"
+            className="text-accent-cyan hover:text-accent-cyan/80 underline transition-colors"
           >
             Back to home
           </button>
@@ -56,7 +52,7 @@ const ProjectDetail = () => {
   const hasImages = project.images && project.images.length > 0;
 
   return (
-    <div className="bg-gray-900 min-h-screen">
+    <div className="bg-canvas min-h-screen">
       <ScrollProgress />
       <Navbar />
 
@@ -65,12 +61,12 @@ const ProjectDetail = () => {
         {/* Back navigation */}
         <motion.button
           onClick={() => navigate('/#projects')}
-          className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-colors mb-10 group"
+          className="flex items-center gap-2 font-mono text-sm text-text-secondary hover:text-accent-cyan transition-colors mb-10 group"
           {...fadeUp(0)}
           whileHover={{ x: -4 }}
         >
-          <FiArrowLeft className="group-hover:text-cyan-400 transition-colors" />
-          <span>Back to Projects</span>
+          <FiArrowLeft className="group-hover:text-accent-cyan transition-colors" />
+          <span>back to projects</span>
         </motion.button>
 
         {/* ── Hero ── */}
@@ -80,22 +76,22 @@ const ProjectDetail = () => {
               {status.label}
             </span>
             {project.role && (
-              <span className="px-3 py-1 bg-purple-500/20 text-purple-400 border border-purple-500/30 text-sm font-semibold rounded-full">
+              <span className="px-3 py-1 bg-accent-purple/10 text-accent-purple border border-accent-purple/30 text-sm font-semibold rounded-full">
                 {project.role}
               </span>
             )}
             {project.featured && (
-              <span className="px-3 py-1 bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-sm font-semibold rounded-full">
+              <span className="px-3 py-1 bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/30 text-sm font-semibold rounded-full">
                 Featured
               </span>
             )}
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-gray-100 to-cyan-400 bg-clip-text text-transparent mb-5 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-5 leading-tight">
             {project.title}
           </h1>
 
-          <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
+          <p className="text-text-secondary text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
             {project.description}
           </p>
 
@@ -105,10 +101,10 @@ const ProjectDetail = () => {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2.5 border border-gray-600 rounded-lg text-gray-300 hover:text-cyan-400 hover:border-cyan-500 transition-all duration-300 font-medium"
+                className="flex items-center gap-2 px-5 py-2.5 border border-border rounded-md text-text-secondary hover:text-accent-cyan hover:border-accent-cyan/50 transition-all duration-300 font-mono text-sm"
               >
                 <FiGithub />
-                GitHub
+                github
               </a>
             )}
             {project.live && (
@@ -116,10 +112,10 @@ const ProjectDetail = () => {
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
+                className="flex items-center gap-2 px-5 py-2.5 bg-accent-cyan text-canvas rounded-md font-mono text-sm font-semibold hover:bg-accent-cyan/90 transition-all duration-300"
               >
                 <FiExternalLink />
-                View Live
+                view live
               </a>
             )}
             {project.cmsUrl && (
@@ -127,10 +123,10 @@ const ProjectDetail = () => {
                 href={project.cmsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2.5 border border-gray-600 rounded-lg text-gray-300 hover:text-cyan-400 hover:border-cyan-500 transition-all duration-300 font-medium"
+                className="flex items-center gap-2 px-5 py-2.5 border border-border rounded-md text-text-secondary hover:text-accent-cyan hover:border-accent-cyan/50 transition-all duration-300 font-mono text-sm"
               >
                 <FiExternalLink />
-                View CMS
+                view cms
               </a>
             )}
           </div>
@@ -139,8 +135,8 @@ const ProjectDetail = () => {
         {/* ── Demo Video ── */}
         {project.videoUrl && (
           <motion.section className="mb-14" {...fadeUp(0.1)}>
-            <h2 className="text-2xl font-bold text-white mb-5">Project Demo</h2>
-            <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-gray-800 border border-white/10 shadow-xl shadow-black/50">
+            <h2 className="text-2xl font-bold text-text-primary mb-5">Project Demo</h2>
+            <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-surface-raised border border-border shadow-xl shadow-black/50">
               <iframe
                 src={`${project.videoUrl}?rel=0&modestbranding=1`}
                 className="absolute inset-0 w-full h-full"
@@ -155,16 +151,16 @@ const ProjectDetail = () => {
         {/* ── Screenshots / Lightbox ── */}
         {hasImages && (
           <motion.section className="mb-14" {...fadeUp(0.15)}>
-            <h2 className="text-2xl font-bold text-white mb-5">
+            <h2 className="text-2xl font-bold text-text-primary mb-5">
               Screenshots
-              <span className="ml-3 text-sm font-normal text-gray-500">({project.images.length})</span>
+              <span className="ml-3 text-sm font-normal text-text-secondary/60">({project.images.length})</span>
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {(showAllImages ? project.images : project.images.slice(0, IMAGE_LIMIT)).map((img, idx) => (
                 <motion.button
                   key={idx}
                   onClick={() => setLightboxState({ open: true, index: idx })}
-                  className="relative group aspect-video overflow-hidden rounded-xl bg-gray-800 border border-white/10 cursor-pointer"
+                  className="relative group aspect-video overflow-hidden rounded-xl bg-surface-raised border border-border cursor-pointer"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   initial={{ opacity: 0, y: 12 }}
@@ -189,7 +185,7 @@ const ProjectDetail = () => {
               <div className="mt-4 text-center">
                 <button
                   onClick={() => setShowAllImages((prev) => !prev)}
-                  className="px-6 py-2.5 border border-gray-600 rounded-lg text-gray-400 hover:text-cyan-400 hover:border-cyan-500 transition-all duration-300 text-sm font-medium"
+                  className="px-6 py-2.5 border border-border rounded-md text-text-secondary hover:text-accent-cyan hover:border-accent-cyan/50 transition-all duration-300 text-sm font-mono"
                 >
                   {showAllImages
                     ? 'Show Less'
@@ -203,10 +199,10 @@ const ProjectDetail = () => {
         {/* ── More About ── */}
         {hasBlogContent && (
           <motion.section className="mb-14" {...fadeUp(0.2)}>
-            <h2 className="text-2xl font-bold text-white mb-6">More About {project.title}</h2>
+            <h2 className="text-2xl font-bold text-text-primary mb-6">More About {project.title}</h2>
             <div className="space-y-5">
               {project.blogContent.map((paragraph, i) => (
-                <p key={i} className="text-gray-300 leading-relaxed text-base md:text-lg">
+                <p key={i} className="text-text-secondary leading-relaxed text-base md:text-lg">
                   {paragraph}
                 </p>
               ))}
@@ -216,14 +212,14 @@ const ProjectDetail = () => {
 
         {/* ── Tech Stack ── */}
         <motion.section className="mb-14" {...fadeUp(0.25)}>
-          <h2 className="text-2xl font-bold text-white mb-6">Tech Stack</h2>
+          <h2 className="text-2xl font-bold text-text-primary mb-6">Tech Stack</h2>
           <div className="space-y-5">
             {project.tech.frontend?.length > 0 && (
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-widest mb-3 font-medium">Frontend</p>
+                <p className="font-mono text-xs text-text-secondary/60 uppercase tracking-widest mb-3">// frontend</p>
                 <div className="flex flex-wrap gap-2">
                   {project.tech.frontend.map((t) => (
-                    <span key={t} className="px-4 py-2 bg-cyan-900/40 text-cyan-300 rounded-lg text-sm font-mono border border-cyan-700/40">
+                    <span key={t} className="px-3 py-1.5 bg-accent-cyan/10 text-accent-cyan rounded-md text-sm font-mono border border-accent-cyan/30">
                       {t}
                     </span>
                   ))}
@@ -232,10 +228,10 @@ const ProjectDetail = () => {
             )}
             {project.tech.backend?.length > 0 && (
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-widest mb-3 font-medium">Backend</p>
+                <p className="font-mono text-xs text-text-secondary/60 uppercase tracking-widest mb-3">// backend</p>
                 <div className="flex flex-wrap gap-2">
                   {project.tech.backend.map((t) => (
-                    <span key={t} className="px-4 py-2 bg-blue-900/40 text-blue-300 rounded-lg text-sm font-mono border border-blue-700/40">
+                    <span key={t} className="px-3 py-1.5 bg-accent-purple/10 text-accent-purple rounded-md text-sm font-mono border border-accent-purple/30">
                       {t}
                     </span>
                   ))}
@@ -244,10 +240,10 @@ const ProjectDetail = () => {
             )}
             {project.tech.devops?.length > 0 && (
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-widest mb-3 font-medium">DevOps & Cloud</p>
+                <p className="font-mono text-xs text-text-secondary/60 uppercase tracking-widest mb-3">// devops & cloud</p>
                 <div className="flex flex-wrap gap-2">
                   {project.tech.devops.map((t) => (
-                    <span key={t} className="px-4 py-2 bg-purple-900/40 text-purple-300 rounded-lg text-sm font-mono border border-purple-700/40">
+                    <span key={t} className="px-3 py-1.5 bg-accent-amber/10 text-accent-amber rounded-md text-sm font-mono border border-accent-amber/30">
                       {t}
                     </span>
                   ))}
@@ -261,12 +257,12 @@ const ProjectDetail = () => {
         {/* Bottom back button */}
         <motion.button
           onClick={() => navigate('/#projects')}
-          className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-colors group"
+          className="flex items-center gap-2 font-mono text-sm text-text-secondary hover:text-accent-cyan transition-colors group"
           {...fadeUp(0.35)}
           whileHover={{ x: -4 }}
         >
-          <FiArrowLeft className="group-hover:text-cyan-400 transition-colors" />
-          Back to All Projects
+          <FiArrowLeft className="group-hover:text-accent-cyan transition-colors" />
+          back to all projects
         </motion.button>
       </main>
 

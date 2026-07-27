@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { personalInfo } from '../data';
+import { scrollToSection } from '../utils/scrollTo';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -21,25 +23,24 @@ const Navbar = () => {
   const handleNavClick = (sectionId) => {
     setIsMobileMenuOpen(false);
     if (location.pathname === '/') {
-      const element = document.getElementById(sectionId);
-      if (element) element.scrollIntoView({ behavior: 'smooth' });
+      scrollToSection(sectionId);
     } else {
       navigate(`/#${sectionId}`);
     }
   };
 
   const navItems = [
-    { name: 'Home', id: 'home' },
-    { name: 'About', id: 'about' },
-    { name: 'Projects', id: 'projects' },
-    { name: 'Contact', id: 'contact' },
+    { name: 'home', id: 'home' },
+    { name: 'about', id: 'about' },
+    { name: 'projects', id: 'projects' },
+    { name: 'contact', id: 'contact' },
   ];
 
   return (
     <motion.nav
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-gray-900/95 backdrop-blur-md shadow-lg shadow-cyan-500/10 border-b border-cyan-500/10'
+          ? 'bg-canvas/90 backdrop-blur-md border-b border-border'
           : 'bg-transparent'
       }`}
       initial={{ y: -100 }}
@@ -54,9 +55,9 @@ const Navbar = () => {
             whileHover={{ scale: 1.05 }}
             onClick={() => handleNavClick('home')}
           >
-            <img src="/logo.svg" alt="Reufolio Logo" className="w-10 h-10" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              Reufolio
+            <img src="/logo.svg" alt="Reufolio Logo" className="w-9 h-9" />
+            <span className="text-lg font-mono font-semibold text-text-primary">
+              reufolio<span className="text-accent-cyan">.</span>
             </span>
           </motion.div>
 
@@ -66,7 +67,7 @@ const Navbar = () => {
               <motion.button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className="text-gray-300 hover:text-cyan-400 transition-colors duration-300 font-medium"
+                className="font-mono text-sm text-text-secondary hover:text-accent-cyan transition-colors duration-300"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -75,27 +76,30 @@ const Navbar = () => {
             ))}
 
             {/* Available for Hire badge */}
-            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-green-500/15 border border-green-500/30 text-green-400 text-sm font-semibold rounded-full">
-              <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-              Available for Hire
+            <span className="flex items-center gap-1.5 px-3 py-1.5 border border-accent-green/30 text-accent-green text-xs font-mono rounded-md">
+              <span className="w-1.5 h-1.5 bg-accent-green rounded-full animate-pulse" />
+              available_for_hire
             </span>
 
             <motion.a
               href={personalInfo.resumePath}
               download="Reuel_Richards_Resume.pdf"
-              className="px-4 py-2 bg-cyan-500 text-gray-900 rounded-lg font-semibold hover:bg-cyan-400 transition-colors duration-300"
-              whileHover={{ scale: 1.05 }}
+              className="px-4 py-2 rounded-md border border-border text-text-primary hover:border-accent-cyan hover:text-accent-cyan font-mono text-sm transition-colors duration-300"
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.95 }}
             >
-              Resume
+              $ resume
             </motion.a>
+
+            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-3">
+            <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-300 hover:text-cyan-400 transition-colors"
+              className="text-text-secondary hover:text-accent-cyan transition-colors"
             >
               {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
@@ -113,29 +117,29 @@ const Navbar = () => {
         }}
         transition={{ duration: 0.3 }}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-900/95 backdrop-blur-sm">
+        <div className="px-2 pt-2 pb-3 space-y-1 bg-canvas/95 backdrop-blur-sm border-t border-border">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => handleNavClick(item.id)}
-              className="block w-full text-left px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-800 rounded-md transition-colors duration-300"
+              className="block w-full text-left px-3 py-2 font-mono text-sm text-text-secondary hover:text-accent-cyan hover:bg-surface rounded-md transition-colors duration-300"
             >
               {item.name}
             </button>
           ))}
           {/* Available for Hire badge — mobile */}
           <div className="px-3 py-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-500/15 border border-green-500/30 text-green-400 text-sm font-semibold rounded-full">
-              <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-              Available for Hire
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-accent-green/30 text-accent-green text-xs font-mono rounded-md">
+              <span className="w-1.5 h-1.5 bg-accent-green rounded-full animate-pulse" />
+              available_for_hire
             </span>
           </div>
           <a
             href={personalInfo.resumePath}
             download="Reuel_Richards_Resume.pdf"
-            className="block w-full text-center px-3 py-2 bg-cyan-500 text-gray-900 rounded-lg font-semibold hover:bg-cyan-400 transition-colors duration-300"
+            className="block w-full text-center px-3 py-2 rounded-md border border-border text-text-primary hover:border-accent-cyan hover:text-accent-cyan font-mono text-sm transition-colors duration-300"
           >
-            Download Resume
+            $ download resume
           </a>
         </div>
       </motion.div>

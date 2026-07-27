@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 import { personalInfo } from '../data';
+import { scrollToSection } from '../utils/scrollTo';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -16,125 +17,85 @@ const Footer = () => {
 
   const handleNavClick = (sectionId) => {
     if (location.pathname === '/') {
-      const element = document.getElementById(sectionId);
-      if (element) element.scrollIntoView({ behavior: 'smooth' });
+      scrollToSection(sectionId);
     } else {
       navigate(`/#${sectionId}`);
     }
   };
 
   return (
-    <footer className="relative bg-gray-900 border-t border-gray-800 overflow-hidden">
+    <footer className="relative bg-canvas border-t border-border overflow-hidden">
       {/* Static background — no JS animations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-gradient-to-tr from-cyan-500/8 to-blue-500/5 rounded-full blur-3xl" />
-        <div className="absolute -top-20 -right-20 w-80 h-80 bg-gradient-to-bl from-blue-500/8 to-purple-500/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent-cyan/5 rounded-full blur-3xl" />
+        <div className="absolute -top-20 -right-20 w-80 h-80 bg-accent-purple/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <motion.div
+        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand with Logo */}
+          {/* Brand */}
           <div>
-            <motion.div
-              className="flex items-center gap-3 mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <img src="/logo.svg" alt="Reufolio Logo" className="w-12 h-12" />
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                Reufolio
+            <div className="flex items-center gap-3 mb-4">
+              <img src="/logo.svg" alt="Reufolio Logo" className="w-10 h-10" />
+              <h3 className="font-mono text-xl font-semibold text-text-primary">
+                reufolio<span className="text-accent-cyan">.</span>
               </h3>
-            </motion.div>
-            <motion.p
-              className="text-gray-400"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
+            </div>
+            <p className="text-text-secondary">
               Building exceptional digital experiences, one line of code at a time.
-            </motion.p>
+            </p>
           </div>
 
           {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+          <div>
+            <h4 className="font-mono text-sm text-text-secondary/60 mb-4">// quick_links</h4>
             <ul className="space-y-2">
-              {['Home', 'About', 'Projects', 'Contact'].map((item, index) => (
-                <motion.li
-                  key={item}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
-                >
+              {['Home', 'About', 'Projects', 'Contact'].map((item) => (
+                <li key={item}>
                   <button
                     onClick={() => handleNavClick(item.toLowerCase())}
-                    className="text-gray-400 hover:text-cyan-400 transition-colors duration-300 relative group"
+                    className="font-mono text-sm text-text-secondary hover:text-accent-cyan transition-colors duration-300"
                   >
-                    <span className="relative">
-                      {item}
-                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 group-hover:w-full transition-all duration-300" />
-                    </span>
+                    {item.toLowerCase()}
                   </button>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Social Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h4 className="text-white font-semibold mb-4">Connect</h4>
-            <div className="flex gap-4">
-              {socialLinks.map((link, index) => (
-                <motion.a
+          <div>
+            <h4 className="font-mono text-sm text-text-secondary/60 mb-4">// connect</h4>
+            <div className="flex gap-3">
+              {socialLinks.map((link) => (
+                <a
                   key={link.name}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:bg-gray-700 transition-all duration-300 relative group"
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
-                  whileHover={{ y: -4, scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  aria-label={link.name}
+                  className="w-11 h-11 rounded-md border border-border flex items-center justify-center text-text-secondary hover:text-accent-cyan hover:border-accent-cyan/50 transition-colors duration-300"
                 >
-                  <link.icon size={20} />
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/0 to-blue-500/0 group-hover:from-cyan-500/20 group-hover:to-blue-500/20 transition-all duration-300" />
-                </motion.a>
+                  <link.icon size={18} />
+                </a>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Bottom Bar */}
-        <motion.div
-          className="pt-8 border-t border-gray-800"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm">
-              © {currentYear} {personalInfo.name} • {personalInfo.location} • All rights reserved.
-            </p>
-          </div>
-        </motion.div>
-      </div>
+        <div className="pt-8 border-t border-border">
+          <p className="text-text-secondary/70 text-sm font-mono">
+            © {currentYear} {personalInfo.name} · {personalInfo.location}
+          </p>
+        </div>
+      </motion.div>
     </footer>
   );
 };
