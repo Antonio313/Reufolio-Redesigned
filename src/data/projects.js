@@ -12,7 +12,7 @@ export const projects = [
     role: "Fullstack Developer",
     status: "live",
     featured: true,
-    github: "",
+    github: "https://github.com/Antonio313/Pongs-Shipping-Frontend",
     live: "https://pongsshipping.com",
     metrics: [
       "80% efficiency improvement",
@@ -322,6 +322,82 @@ export const projects = [
       "The same reasoning that led me to build Reufolio from scratch applies here. If I am asking clients to trust me with their web presence, my own web presence should be proof that I know what I am doing. A Squarespace landing page would have been faster, but it also would have been the wrong signal. RWS was built with React 19 and TypeScript, Tailwind CSS 4, and a serverless EmailJS contact form with real-time validation. It is SEO-optimized with JSON-LD LocalBusiness structured data, Open Graph, and Twitter Card meta tags baked directly into the HTML, because the site needed to rank, not just exist.",
       "The 60% increase in consultation conversions did not come from ads or outreach. It came from having a site that serious clients could actually evaluate. Before it existed, enquiries came through word of mouth and referrals from previous clients, and the first conversation was always spent establishing credibility. After launch, clients arrived having already read about the services, seen the portfolio, and made a preliminary decision about whether they wanted to work together. That shift changed the quality of every conversation.",
       "RWS is live at reuelswebservices.online, and it does its job. It is the face of how I show up professionally, a signal that the work I do for clients is held to the same standard as the work I do for myself."
+    ]
+  },
+  {
+    id: "resume-me",
+    title: "ResuME",
+    shortDescription: "AI resume and cover letter generator that writes in your actual voice",
+    description: "ResuME started as a way to stop sending out resumes that sounded like everyone else's. Instead of filling out a form and getting back generic AI copy, the app first spends time learning how you actually write through a short set of reflection prompts, then uses that voice profile to rewrite your resume and draft a cover letter for a specific job posting. Paste in a job description and ResuME runs a gap analysis against your background, flags where you're strong and where you're reaching, and generates a tailored resume and cover letter in parallel, both grounded in your own sentence rhythm, formality, and phrasing rather than the usual 'results-driven, dynamic team player' template language.",
+    tech: {
+      frontend: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "Zustand"],
+      backend: ["Next.js API Routes (streaming)", "Anthropic Claude API (Sonnet 4.6)"]
+    },
+    role: "Solo Developer",
+    status: "private",
+    featured: true,
+    github: "https://github.com/Antonio313/ResuME",
+    live: "",
+    metrics: [
+      "Two distinct AI-generated voice profiles — resume and persuasive cover-letter register",
+      "Automatic gap analysis with confidence-calibrated framing (none / moderate / significant)",
+      "Hard-coded ban list strips generic AI-resume phrasing (\"spearheaded\", \"synergy\", \"leverage\", etc.)"
+    ],
+    videoUrl: "",
+    images: [
+      { src: "/projects/resume-me/screenshot-1.png", alt: "ResuME - Screenshot 1" },
+      { src: "/projects/resume-me/screenshot-2.png", alt: "ResuME - Screenshot 2" },
+      { src: "/projects/resume-me/screenshot-3.png", alt: "ResuME - Screenshot 3" },
+      { src: "/projects/resume-me/screenshot-4.png", alt: "ResuME - Screenshot 4" },
+      { src: "/projects/resume-me/screenshot-5.png", alt: "ResuME - Screenshot 5" },
+      { src: "/projects/resume-me/screenshot-6.png", alt: "ResuME - Screenshot 6" }
+    ],
+    blogContent: [
+      "I built ResuME after one too many rounds of tailoring the same resume for a new job posting and ending up with something that read like it was written by a template. Every rewrite followed the same script: swap in a few keywords from the job description, sprinkle in a 'results-driven' or 'passionate about,' and hope it passed. None of it sounded like me, and I doubted it sounded like anyone. I wanted a tool that would actually learn how I write and use that to do the tailoring, instead of asking me to sound like an AI wrote it.",
+      "The first thing ResuME does is get to know you before it touches a resume. A one-time setup walks you through a set of reflection prompts, five about how you talk about your work, three about how you persuade people, and an AI voice analysis turns your answers into two distinct profiles: one that captures your professional sentence rhythm, formality, and self-advocacy style for resumes, and a separate one for the more personal, persuasive register a cover letter needs. Those profiles, not a generic style guide, are what every future document gets measured against.",
+      "The actual workflow starts with pasting in a job description. ResuME runs a gap analysis against your background and comes back with an honest read: are you well-qualified, reaching a bit, or genuinely stretching for this role, along with a suggested way to frame that gap rather than hide it. That framing is the part I spent the most time getting right, because the same gap needs to be handled completely differently depending on how real it is. A candidate with a moderate stretch should lead with transferable skills and momentum; someone reaching further needs an ambitious but honest pitch, not a confidence trick. Getting that calibration right, on top of letting the tone itself shift between warm, confident, and formal, was the trickiest part of the whole build.",
+      "From there, ResuME streams a tailored resume and cover letter at the same time, both written through your voice profile and explicitly forbidden from using stock AI-resume vocabulary, no 'spearheaded,' no 'synergy,' no 'leverage.' The app is built with Next.js 16 and React 19 on the frontend, with Zustand handling local state and persistence so voice profiles, base resume, and application history live entirely in the browser. The backend is a set of streaming Next.js API routes talking to Claude, using prompt caching on the system prompts and tool definitions to keep repeated generations affordable.",
+      "Every application gets saved to a local history, so past resumes, cover letters, and the gap analysis behind them are there to reference the next time a similar role comes up. What used to be a manual, dispiriting rewrite process is now a few-minute pass from job posting to a resume and cover letter that actually sound like they were written by a person, because they were, just faster."
+    ]
+  },
+  {
+    id: "mavis-scott-foundation",
+    title: "The Mavis Scott Foundation",
+    shortDescription: "Full-stack charity platform with a self-serve content management system",
+    description: "The Mavis Scott Foundation needed a digital home that could carry the weight of a real legacy while staying entirely in the hands of a non-technical administrator. I built a full-stack Next.js platform split into two halves: a public-facing site covering programs, events, blog, volunteer intake, and donations, and a password-protected CMS where the Foundation's administrator can manage every piece of that content herself, no code required. Events get rich-text descriptions and photo galleries, blog posts get a full editor and tagging, and donors get both a Donorbox embed and local Jamaican bank transfer details alongside international wire instructions. Every image goes through a direct-to-S3 presigned upload flow, and every contact or volunteer inquiry lands in an inbox with an automatic email notification.",
+    tech: {
+      frontend: ["Next.js 15 (App Router)", "TypeScript", "Tailwind CSS 4", "shadcn/ui", "Framer Motion"],
+      backend: ["Prisma", "PostgreSQL", "Auth.js v5", "Zod", "React Hook Form"],
+      devops: ["Railway", "AWS S3", "Resend"]
+    },
+    role: "Fullstack Developer",
+    status: "live",
+    featured: true,
+    github: "https://github.com/Antonio313/the-mavis-scott-foundation",
+    live: "https://themavisscottlegacyfoundation.org",
+    metrics: [
+      "Fully self-serve CMS — every page on the site is editable without touching code",
+      "12-model schema covering events, programs, blog, team, testimonials, donations, and inbox",
+      "Direct-to-S3 presigned uploads with zero file bytes touching the app server"
+    ],
+    videoUrl: "",
+    images: [
+      { src: "/projects/mavis-scott-foundation/screenshot-1.png", alt: "The Mavis Scott Foundation - Screenshot 1" },
+      { src: "/projects/mavis-scott-foundation/screenshot-2.png", alt: "The Mavis Scott Foundation - Screenshot 2" },
+      { src: "/projects/mavis-scott-foundation/screenshot-3.png", alt: "The Mavis Scott Foundation - Screenshot 3" },
+      { src: "/projects/mavis-scott-foundation/screenshot-4.png", alt: "The Mavis Scott Foundation - Screenshot 4" },
+      { src: "/projects/mavis-scott-foundation/screenshot-5.png", alt: "The Mavis Scott Foundation - Screenshot 5" },
+      { src: "/projects/mavis-scott-foundation/screenshot-6.png", alt: "The Mavis Scott Foundation - Screenshot 6" },
+      { src: "/projects/mavis-scott-foundation/screenshot-7.png", alt: "The Mavis Scott Foundation - Screenshot 7" },
+      { src: "/projects/mavis-scott-foundation/screenshot-8.png", alt: "The Mavis Scott Foundation - Screenshot 8" },
+      { src: "/projects/mavis-scott-foundation/screenshot-9.png", alt: "The Mavis Scott Foundation - Screenshot 9" }
+    ],
+    blogContent: [
+      "The Mavis Scott Foundation came to me needing more than a website — they needed a way to carry a legacy forward. The Foundation is built around Mavis Scott's history of community outreach, empowerment, education, and acts of service, and the site had to reflect that with the same dignity it's carried offline: real weight given to her story, not a generic charity template with a donate button bolted on.",
+      "The complicating factor was who would be running the site day to day. Trisan, the Foundation's administrator, isn't a developer, and there was never going to be a scenario where she'd need to open a code editor to add an event, publish a blog post, or update a stat on the homepage. So the real project wasn't just the public site — it was building a CMS underneath it that could hold its own against tools built by much bigger teams, covering events, programs, blog posts, team members, testimonials, impact stats, donation methods, and social links, all editable through clean forms instead of database queries.",
+      "The part that took the most care was the donation experience, because it had to work for two very different kinds of donors. International giving runs through a Donorbox embed, which is the natural fit for card payments from outside Jamaica. But a meaningful share of the Foundation's support comes through direct bank transfer, so I built out a donation-info system with separate local (JMD) and international (SWIFT wire) entries that Trisan can add to or update herself as banking details change, without ever needing to ask a developer to edit a line of copy.",
+      "On the technical side, the platform is built with Next.js 15 and the App Router, TypeScript throughout, and Tailwind CSS with shadcn/ui for the component layer. Auth.js v5 protects every admin route behind credentials-based login, with middleware guarding the entire /admin tree. Content is modeled in PostgreSQL through Prisma, rich text for events, programs, and blog posts runs through Tiptap, and every image — from event galleries to team photos — uploads directly to S3 through presigned URLs, so no file ever passes through the app server. Contact and volunteer form submissions save to the database and trigger an email via Resend, so nothing slips through.",
+      "What I'm most proud of here isn't a single feature, it's that Trisan can run the entire site herself now. Every event, every post, every stat on the homepage, every donation method, all of it is hers to update the moment something changes, without waiting on me. That was the actual brief underneath the visible one: build something that outlives the handoff."
     ]
   }
 ];

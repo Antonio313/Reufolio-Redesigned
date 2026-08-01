@@ -10,6 +10,7 @@ const statusConfig = {
   live: { label: 'live', dot: 'bg-accent-green', text: 'text-accent-green' },
   wip: { label: 'in_progress', dot: 'bg-accent-amber', text: 'text-accent-amber' },
   academic: { label: 'capstone', dot: 'bg-accent-purple', text: 'text-accent-purple' },
+  private: { label: 'private', dot: 'bg-text-secondary', text: 'text-text-secondary' },
 };
 
 const Projects = () => {

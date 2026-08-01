@@ -12,6 +12,7 @@ const statusConfig = {
   live: { label: 'Live', classes: 'bg-accent-green/10 text-accent-green border border-accent-green/30' },
   wip: { label: 'Work in Progress', classes: 'bg-accent-amber/10 text-accent-amber border border-accent-amber/30' },
   academic: { label: 'Capstone Project', classes: 'bg-accent-purple/10 text-accent-purple border border-accent-purple/30' },
+  private: { label: 'Personal Use', classes: 'bg-surface-raised text-text-secondary border border-border' },
   shelved: { label: 'Shelved', classes: 'bg-surface-raised text-text-secondary border border-border' },
 };
 
