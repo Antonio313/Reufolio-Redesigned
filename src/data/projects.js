@@ -198,7 +198,7 @@ export const projects = [
     role: "Fullstack Developer",
     status: "live",
     featured: true,
-    github: "",
+    github: "https://github.com/Antonio313/Rasta-Collections",
     live: "https://rastacollections.store",
     metrics: [
       "Password-protected CMS with full product & category management",
@@ -241,7 +241,7 @@ export const projects = [
     role: "Fullstack Developer",
     status: "live",
     featured: true,
-    github: "https://github.com/Antonio313",
+    github: "https://github.com/Antonio313/Reufolio-Redesigned",
     live: "https://reufolio.online",
     metrics: [
       "Session-gated intro video overlay with YouTube embed",
@@ -275,7 +275,7 @@ export const projects = [
     role: "Lead Frontend Developer",
     status: "academic",
     featured: true,
-    github: "", // Add your ByteGrade repo URL here
+    github: "https://github.com/Antonio313/ByteGrade", 
     live: "",
     metrics: [
       "BSc Final Year Project — UTech 2025",
@@ -388,9 +388,6 @@ export const projects = [
       { src: "/projects/mavis-scott-foundation/screenshot-4.png", alt: "The Mavis Scott Foundation - Screenshot 4" },
       { src: "/projects/mavis-scott-foundation/screenshot-5.png", alt: "The Mavis Scott Foundation - Screenshot 5" },
       { src: "/projects/mavis-scott-foundation/screenshot-6.png", alt: "The Mavis Scott Foundation - Screenshot 6" },
-      { src: "/projects/mavis-scott-foundation/screenshot-7.png", alt: "The Mavis Scott Foundation - Screenshot 7" },
-      { src: "/projects/mavis-scott-foundation/screenshot-8.png", alt: "The Mavis Scott Foundation - Screenshot 8" },
-      { src: "/projects/mavis-scott-foundation/screenshot-9.png", alt: "The Mavis Scott Foundation - Screenshot 9" }
     ],
     blogContent: [
       "The Mavis Scott Foundation came to me needing more than a website — they needed a way to carry a legacy forward. The Foundation is built around Mavis Scott's history of community outreach, empowerment, education, and acts of service, and the site had to reflect that with the same dignity it's carried offline: real weight given to her story, not a generic charity template with a donate button bolted on.",
