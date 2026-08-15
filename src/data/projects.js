@@ -361,6 +361,65 @@ export const projects = [
     ]
   },
   {
+    id: "reugym",
+    title: "ReuGym",
+    shortDescription: "AI-assisted, offline-first workout tracking PWA",
+    description: "ReuGym started as a personal project: a single-user, no-backend workout tracker built around my own Push/Pull/Legs/Core training split, designed offline-first so it would work reliably as a installable PWA at the gym with no signal. It has since grown into a real multi-user product with Supabase Auth, row-level security, and an AI-assisted setup wizard that builds a new user's entire training program for them. Instead of a static intake form, new users answer a short set of questions and Claude plans a personalized multi-day program — choosing exercises, sets, rep ranges, starting weights, and pre/post-workout stretches — by calling structured tools against the same data model the app's own Template Editor uses, so what the AI builds is indistinguishable from what a human would configure by hand.",
+    tech: {
+      frontend: [
+        "React 19",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS 4",
+        "shadcn/ui",
+        "Zustand",
+        "Dexie (IndexedDB)",
+        "React Hook Form",
+        "Zod",
+        "Framer Motion",
+        "Phosphor Icons",
+        "vite-plugin-pwa"
+      ],
+      backend: [
+        "Supabase (Postgres, Auth, Storage)",
+        "Supabase Edge Functions (Deno)",
+        "Row Level Security",
+        "Anthropic Claude API"
+      ],
+      devops: ["Railway", "Vitest"]
+    },
+    role: "Solo Developer",
+    status: "live",
+    featured: true,
+    github: "https://github.com/Antonio313/ReuGym",
+    live: "https://reugym.online",
+    metrics: [
+      "AI setup wizard plans a full multi-day program through parallel, per-day Claude tool-calling conversations",
+      "Row-level security enforced on every table, closing a real pre-launch vulnerability in the anon-key data model",
+      "Offline-first Dexie/IndexedDB store per user, synced to Postgres through a queued sync engine",
+      "AI-created exercises auto-promote into a shared, deduplicated exercise library used by every account",
+      "Installable PWA with rest-timer audio, haptics, and screen wake lock built for real gym use"
+    ],
+    videoUrl: "",
+    images: [
+      { src: "/projects/reugym/screenshot-1.png", alt: "ReuGym - Home screen with the six training day cards" },
+      { src: "/projects/reugym/screenshot-2.png", alt: "ReuGym - Template Editor showing an AI-built Push day with loadouts" },
+      { src: "/projects/reugym/screenshot-3.png", alt: "ReuGym - Exercise Library with search and muscle filtering" },
+      { src: "/projects/reugym/screenshot-4.png", alt: "ReuGym - Exercise detail page with personal-best chart and session history" },
+      { src: "/projects/reugym/screenshot-5.png", alt: "ReuGym - Workout History list with sets, duration, and PR badges" },
+      { src: "/projects/reugym/screenshot-6.png", alt: "ReuGym - Logged session detail showing sets, weights, and RIR" }
+    ],
+    blogContent: [
+      "ReuGym exists because I wanted a workout tracker built exactly around how I actually train, and I was tired of generic fitness apps that treat every lift the same way. I train a Push/Pull/Legs/Core split around basketball performance goals, and I wanted something that tracked sets, reps, RIR, and PRs precisely, with zero friction between finishing a set and logging it. So I scaffolded ReuGym as a single-user, no-backend PWA: every rep lives in IndexedDB via Dexie, the UI is mobile-first with a deliberately dark, orange-accented design system, and there's a custom numeric keypad instead of a native number input because native inputs are clumsy mid-set with sweaty hands and a phone propped against a bench.",
+      "What was originally a personal tool has since grown into a real multi-user application. I replaced the original no-auth, localStorage email-lookup scheme with real Supabase Auth — email/password with required confirmation — and, more importantly, enabled row-level security on every table. That wasn't a cosmetic change. The Supabase anon key ships inside every browser bundle regardless of whether the repo is public, so before RLS, anyone who found that key could hit the REST API directly and read or write any user's training data. Closing that gap was a genuine pre-launch security fix, and it's now a hard rule for every new table: no schema change ships without an RLS policy in the same migration that creates it.",
+      "The feature I'm proudest of is the AI-assisted setup wizard. When a new user finishes a short intake form, an Edge Function calls Claude, and instead of returning a block of text for the user to manually copy into the app, Claude plans the program by calling the same structured tools the app's own Template Editor would use: add_exercise_to_template, add_stretch_to_template, create_custom_exercise, set_starting_weight. The model reasons about sets, rep ranges, rest periods, whether an exercise is bodyweight or timed, and a sensible starting weight for the user's level, then writes it directly into their program. It also checks its own output against the existing exercise library before inventing something new, so it reuses \"Diamond Push-Up\" instead of creating \"Close-Grip Push-Up\" as a near-duplicate.",
+      "Getting there took a real architecture rebuild. Supabase's Free tier caps an Edge Function invocation at 150 seconds of wall-clock execution, and I deliberately stayed on Free rather than pay for Pro's longer limit — which meant building around the constraint instead. The original version planned an entire program in one long serial conversation with Claude, and it kept bumping into that ceiling: I watched it hit a hard 150.2-second timeout, and a separate run finish at 144.4 seconds, uncomfortably close to failing outright. The fix was to stop treating the whole program as one conversation. Each selected training day now gets its own independent planning conversation with Claude, and all of them run concurrently via Promise.all. Wall-clock time for the entire wizard is now roughly the time for the slowest single day, not the sum of every day combined, so the same Edge Function comfortably handles a user picking one day or all six.",
+      "Running days in parallel also made retries cheap. If a single day's conversation comes back empty or fails validation, only that one day gets retried, up to three times, since redoing one day's worth of planning is inexpensive compared to redoing an entire program. That retry logic exists because of a real bug I chased down: with Claude's default tool_choice setting, the model would occasionally end its turn with a plain \"here's what I'll do\" text response and zero tool calls — a genuine, successful API response that simply did nothing, surfacing to the user as \"no exercises came back.\" Forcing tool_choice to require a tool call on every turn, with an explicit finish_planning tool as the only way to end a session, closed that failure mode entirely.",
+      "The rest of the sync architecture had to support all of this without ever losing data. Each user gets their own cached Dexie database instance rather than one shared IndexedDB store, and a queued offline sync engine reconciles local changes with Postgres on app load and whenever the browser comes back online. Exercises an AI wizard run creates for one user automatically promote into a shared, deduplicated library that every future user's wizard run can draw from, so the library gets more useful over time instead of accumulating redundant entries — checked both against existing names and against everything else the current batch of parallel day-calls just created, since two days planned independently can invent the same exercise without knowing about each other.",
+      "ReuGym is still, at its core, the app I built to track my own training — but it's grown into something I'm comfortable putting other people's data into. Building the AI wizard taught me more about designing for a hard execution-time constraint, structured tool calling, and prompt caching than any tutorial would have, because every fix had to survive a real 150-second clock and a real API response, not a mocked one."
+    ]
+  },
+  {
     id: "mavis-scott-foundation",
     title: "The Mavis Scott Foundation",
     shortDescription: "Full-stack charity platform with a self-serve content management system",
